@@ -6,7 +6,11 @@ export default function Footer() {
         <div className="md:col-span-1">
           {/* Logo */}
           <div className="flex items-center gap-3 mb-4">
-            <img src="/logo-passa-a-bola.png" alt="Logo Passa a Bola" className="w-10 h-10" />
+            <img
+              src="/logo-passa-a-bola.png"
+              alt="Logo Passa a Bola"
+              className="w-10 h-10"
+            />
             <span className="font-bold text-xl">PASSA A BOLA</span>
           </div>
         </div>

@@ -1,13 +1,13 @@
 // src/components/sections/ProximosJogos.jsx
-import GameCard from '../common/GameCard';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import GameCard from "../common/GameCard";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ProximosJogos() {
   // Dados de exemplo (virão de uma API no futuro)
   const games = [
-    { id: 1, teamA: 'Palmeiras', teamB: 'Corinthians', time: '15:30' },
-    { id: 2, teamA: 'Santos', teamB: 'Corinthians', time: '15:30' },
-    { id: 3, teamA: 'São Paulo', teamB: 'Corinthians', time: '15:30' },
+    { id: 1, teamA: "Palmeiras", teamB: "Corinthians", time: "15:30" },
+    { id: 2, teamA: "Santos", teamB: "Corinthians", time: "15:30" },
+    { id: 3, teamA: "São Paulo", teamB: "Corinthians", time: "15:30" },
   ];
 
   return (
@@ -25,7 +25,7 @@ export default function ProximosJogos() {
           </div>
         </div>
         <div className="flex gap-20 overflow-x-auto pb-4">
-          {games.map(game => (
+          {games.map((game) => (
             <GameCard key={game.id} game={game} />
           ))}
         </div>

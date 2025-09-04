@@ -1,4 +1,3 @@
-import Header from "../components/layout/Header";
 import ImagemDeFundo1 from "../assets/imagemDeFundo.png";
 import QuadradoRoxo from "../core-components/QuadradoRoxo";
 import TituloPrincipal from "../core-components/TituloPrincipal";
@@ -6,6 +5,8 @@ import ProximosJogos from "../components/sections/ProximosJogos";
 import Destaques from "../components/sections/Destaques";
 import Curiosidades from "../components/sections/Curiosidades";
 import Historia from "../components/sections/Historia";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 
 export default function HomePage() {
     return (
@@ -31,7 +32,7 @@ export default function HomePage() {
                 </div>
                 <Historia />
             </section>
+            <Footer />
         </div>
-        
     )
 }
