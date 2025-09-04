@@ -16,7 +16,7 @@ export default function Header() {
         <a href="#" className="hover:text-purple-400 text-[22px]">Destaques</a>
         <a href="#" className="hover:text-purple-400 text-[22px]">História</a>
         <a href="#" className="hover:text-purple-400 text-[22px]">Regras</a>
-        <a href="/login" className="bg-purple-600 px-4 py-2 rounded-full font-semibold text-[18px] hover:bg-purple-700">
+        <a href="#" className="bg-purple-600 px-4 py-2 rounded-full font-semibold text-[18px] hover:bg-purple-700">
           Criar conta
         </a>
       </nav>
