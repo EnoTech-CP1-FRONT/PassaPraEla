@@ -8,13 +8,15 @@ export default function FormsPage() {
   };
 
   return (
-    <div className="bg-gray-100 p-6 md:p-10">
+    <div className="bg-purple-100 p-6 md:p-10">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-center mb-8">
-          FORMULÁRIO DE REGISTRO
-        </h1>
+        <section className="flex bg-fuchsia-800/50 rounded-lg items-center justify-center p-2">
+          <h2 className="text-5xl font-bold font-['Teko']">
+            FORMULÁRIO DE REGISTRO
+          </h2>
+        </section>
 
-        <form>
+        <form className="py-3"> 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-gray-700">Nome Completo</label>

@@ -14,9 +14,10 @@ export default {
         'color-5': '#FFF5F5',
         'color-6': '#0D002C66',
         'color-7': '#07001782',
+        'form-text-color': '#3C0149',
       },
       fontFamily: {
-        sans: ['Teko', 'sans-serif'],
+        sans: ['Teko', 'sans-serif', 'Staatliches'],
       },
     },
   },
