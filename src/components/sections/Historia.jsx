@@ -40,7 +40,7 @@ export default function Historia() {
                 também com 16 times.
               </p>
             </article>
-            <article className="bg-6 p-6 pt-10 pb-10 rounded-lg hover:shadow-lg hover:scale-105 transition-transform duration-300">
+            <article className="bg-6 p-4 flex flex-col gap-2 items-center text-center justify-center pb-10 rounded-lg hover:shadow-lg hover:scale-105 transition-transform duration-300">
               <p className="text-gray-300">
                 As sedes da Copa do Mundo se revezaram entre países da América
                 do Norte, Europa e Ásia. Os Estados Unidos abrigaram a

@@ -1,6 +1,6 @@
 // src/components/layout/Header.jsx
 import { Link } from "react-router-dom";
-import LogoPassaABola from "../../assets/logo-passa-a-bola.svg";
+import LogoPassaABola from "../../assets/icons/logo-passa-a-bola.svg";
 
 export default function Header() {
   return (
