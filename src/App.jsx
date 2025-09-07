@@ -3,6 +3,8 @@ import HomePage from "./pages/HomePage";
 import FormsPage from "./pages/FormsPage";
 import RegrasPage from "./pages/RegrasPage";
 import Cadastrese from "./pages/Cadastrese";
+import FormsPageGame from "./pages/FormsPageGame";
+
 
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
         <Route path="/cadastrese" element={<Cadastrese />} />
         <Route path="/forms" element={<FormsPage />} />
         <Route path="/regras" element={<RegrasPage />} />
+        <Route path="/forms-game" element={<FormsPageGame />} />
       </Routes>
     </Router>
   );
