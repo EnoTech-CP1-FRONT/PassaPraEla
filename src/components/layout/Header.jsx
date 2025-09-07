@@ -26,7 +26,7 @@ export default function Header() {
           Regras
         </Link>
         <Link
-          to="/forms"
+          to="/cadastrese"
           className="bg-purple-600 px-4 py-2 rounded-full font-semibold text-[18px] hover:bg-purple-700"
         >
           Criar conta
