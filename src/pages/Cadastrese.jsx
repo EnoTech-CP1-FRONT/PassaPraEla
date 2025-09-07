@@ -3,17 +3,18 @@ import LogoPassaABolaBlack from "../assets/logo-passa-a-bola-black.png";
 import { NavLink } from "react-router";
 import FormsLogin from "../core-components/FormsLogin";
 
-
 export default function Cadastrese() {
+
 
     return(
         <main className="grid grid-cols-2">
             <img src={CapaCadastrese} alt="imagem das donas do passa a bola" className="h-[100vh] w-full"/>
             
             <div className="flex flex-col items-center p-8 text-black w-full ">
-                <div className="flex items-center gap-4 mb-8">
-                    <img src={LogoPassaABolaBlack} alt="Logo Passa a Bola" className="w-14 h-14" />
+                <div className="relative mb-8">
+                    
                     <h1 className="text-4xl">Passa Pra Ela</h1>
+                    <img src={LogoPassaABolaBlack} alt="Logo Passa a Bola" className="w-14 h-14 absolute top-1/2 -translate-y-1/2 right-full mr-4" />
                 </div>
                 <div className="w-full max-w-md">
                     <div className="flex items-center justify-center">
@@ -34,9 +35,8 @@ export default function Cadastrese() {
                         <span className="text-blue-700 cursor-pointer">Cadastre sua Equipe</span>
                     </NavLink>
                 </div>
-
-                </div>
             </div>
-        </main>
-    )
+        </div>
+    </main>
+  );
 }
