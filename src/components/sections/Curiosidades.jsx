@@ -5,15 +5,15 @@ import curiosidadeImg from "../../assets/curiosidades.png"; // Coloque a imagem 
 export default function Curiosidades() {
   return (
     <section>
-      <Card className="p-4">
+      <Card className="p-4 w-80">
         <h2 className="text-xl font-bold text-gray-800 mb-4">| Curiosidades</h2>
 
         <img
           src={curiosidadeImg}
           alt="Primeiro time oficial de futebol feminino"
-          className="w-full h-48 object-cover"
+          className="  object-cover"
         />
-        <div className="p-4 ">
+        <div className="">
           <h3 className="font-bold text-[1.5rem] text-3 ">
             PRIMEIRO TIME OFICIAL
           </h3>

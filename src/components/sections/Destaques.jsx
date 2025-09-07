@@ -20,7 +20,7 @@ export default function Destaques() {
           <img
             src={destaqueImg}
             alt="Jogadoras do Paulistão Feminino"
-            className="relative  h-60 object-cover"
+            className="relative   object-cover"
           />
           <div className="p-4 ">
             <h3 className="font-bold text-3 text-[2rem] ">
