@@ -16,10 +16,10 @@ export default function FormsPage() {
           </h2>
         </section>
 
-        <form className="py-3"> 
+        <form className="py-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-gray-700">Nome Completo</label>
+              <label className="block text-gray-600">Nome Completo</label>
               <input type="text" className="w-full mt-1 p-2 border rounded" />
             </div>
             <div>
@@ -70,7 +70,7 @@ export default function FormsPage() {
             </div>
 
             {jogadoras.map((_, index) => (
-              <div key={index} className="mt-6 p-4 border rounded">
+              <div key={index} className="mt-6 p-5 rounded-2xl bg-purple-50">
                 <h3 className="text-xl font-bold mb-4">Jogadora {index + 1}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -273,10 +273,10 @@ export default function FormsPage() {
             </div>
           </div>
 
-          <div className="mt-8 text-center">
+          <div className="mt-9 text-center">
             <button
               type="submit"
-              className="bg-green-500 text-white py-3 px-10 rounded-full text-lg font-bold hover:bg-green-600"
+              className="bg-purple-500 text-white py-3 px-15 rounded-full text-lg font-bold hover:bg-purple-700"
             >
               ENVIAR
             </button>

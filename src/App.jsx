@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import FormsPage from "./pages/FormsPage";
 import RegrasPage from "./pages/RegrasPage";
+import FormsPageGame from "./pages/FormsPageGame";
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/forms" element={<FormsPage />} />
         <Route path="/regras" element={<RegrasPage />} />
+        <Route path="/forms-game" element={<FormsPageGame />} />
       </Routes>
     </Router>
   );
