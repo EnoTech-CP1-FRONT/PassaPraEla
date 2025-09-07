@@ -1,4 +1,9 @@
 import { useState } from "react";
+import Container from "../components/componentsRegistro/ContainerRegistro";
+import SectionRegistro from "../components/componentsRegistro/SectionRegistro";
+import Form from "../components/common/form";
+import InputText from "../components/common/InputText";
+import FormRegistro from "../components/componentsRegistro/FormRegistro";
 
 export default function FormsPage() {
   const [jogadoras, setJogadoras] = useState([{}]);
@@ -8,32 +13,12 @@ export default function FormsPage() {
   };
 
   return (
-    <div className="bg-purple-100 p-6 md:p-10">
-      <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-        <section className="flex bg-fuchsia-800/50 rounded-lg items-center justify-center p-2">
-          <h2 className="text-5xl font-bold font-['Teko']">
-            FORMULÁRIO DE REGISTRO
-          </h2>
-        </section>
+    <Container className="bg-purple-100">
+        <SectionRegistro className="bg-fuchsia-800/50" />
 
-        <form className="py-3">
+        <Form adress='/cadastrese' className="py-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-gray-600">Nome Completo</label>
-              <input type="text" className="w-full mt-1 p-2 border rounded" />
-            </div>
-            <div>
-              <label className="block text-gray-700">Email para contato</label>
-              <input type="email" className="w-full mt-1 p-2 border rounded" />
-            </div>
-            <div>
-              <label className="block text-gray-700">Número de telefone</label>
-              <input type="tel" className="w-full mt-1 p-2 border rounded" />
-            </div>
-            <div>
-              <label className="block text-gray-700">Data de Nascimento</label>
-              <input type="date" className="w-full mt-1 p-2 border rounded" />
-            </div>
+            <FormRegistro />
             <div className="md:col-span-2">
               <label className="block text-gray-700">
                 Você autoriza ser contatado(a) por marcas, clubes ou projetos
@@ -41,22 +26,22 @@ export default function FormsPage() {
               </label>
               <div className="mt-2">
                 <label className="inline-flex items-center">
-                  <input type="radio" name="contato" className="form-radio" />
+                  <input type="radio" name="contato" className="form-radio" required />
                   <span className="ml-2">SIM</span>
                 </label>
                 <label className="inline-flex items-center ml-6">
-                  <input type="radio" name="contato" className="form-radio" />
+                  <input type="radio" name="contato" className="form-radio" required />
                   <span className="ml-2">NÃO</span>
                 </label>
               </div>
             </div>
             <div>
               <label className="block text-gray-700">Estado que vive</label>
-              <input type="text" className="w-full mt-1 p-2 border rounded" />
+              <input type="text" className="w-full mt-1 p-2 border rounded" required />
             </div>
             <div>
               <label className="block text-gray-700">Cidade que vive</label>
-              <input type="text" className="w-full mt-1 p-2 border rounded" />
+              <input type="text" className="w-full mt-1 p-2 border rounded" required />
             </div>
           </div>
 
@@ -65,7 +50,7 @@ export default function FormsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-gray-700">Nome do Time</label>
-                <input type="text" className="w-full mt-1 p-2 border rounded" />
+                <input type="text" className="w-full mt-1 p-2 border rounded" required />
               </div>
             </div>
 
@@ -80,6 +65,7 @@ export default function FormsPage() {
                     <input
                       type="email"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div>
@@ -89,6 +75,7 @@ export default function FormsPage() {
                     <input
                       type="tel"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div>
@@ -98,6 +85,7 @@ export default function FormsPage() {
                     <input
                       type="text"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div>
@@ -105,6 +93,7 @@ export default function FormsPage() {
                     <input
                       type="number"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div>
@@ -114,6 +103,7 @@ export default function FormsPage() {
                     <input
                       type="text"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div>
@@ -123,6 +113,7 @@ export default function FormsPage() {
                     <input
                       type="text"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div>
@@ -132,6 +123,7 @@ export default function FormsPage() {
                     <input
                       type="text"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div>
@@ -141,6 +133,7 @@ export default function FormsPage() {
                     <input
                       type="text"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -153,6 +146,7 @@ export default function FormsPage() {
                           type="radio"
                           name={`apto-${index}`}
                           className="form-radio"
+                          required
                         />
                         <span className="ml-2">SIM</span>
                       </label>
@@ -165,6 +159,7 @@ export default function FormsPage() {
                     <input
                       type="text"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -177,6 +172,7 @@ export default function FormsPage() {
                           type="radio"
                           name={`imagem-${index}`}
                           className="form-radio"
+                          required
                         />
                         <span className="ml-2">SIM</span>
                       </label>
@@ -193,6 +189,7 @@ export default function FormsPage() {
                           type="radio"
                           name={`regras-${index}`}
                           className="form-radio"
+                          required
                         />
                         <span className="ml-2">SIM</span>
                       </label>
@@ -203,6 +200,7 @@ export default function FormsPage() {
                     <input
                       type="text"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                   <div>
@@ -212,6 +210,7 @@ export default function FormsPage() {
                     <input
                       type="file"
                       className="w-full mt-1 p-2 border rounded"
+                      required
                     />
                   </div>
                 </div>
@@ -247,11 +246,11 @@ export default function FormsPage() {
               </label>
               <div className="mt-2">
                 <label className="inline-flex items-center">
-                  <input type="radio" name="lgpd" className="form-radio" />
+                  <input type="radio" name="lgpd" className="form-radio" required />
                   <span className="ml-2">SIM, EU AUTORIZO.</span>
                 </label>
                 <label className="inline-flex items-center ml-6">
-                  <input type="radio" name="lgpd" className="form-radio" />
+                  <input type="radio" name="lgpd" className="form-radio" required />
                   <span className="ml-2">NÃO.</span>
                 </label>
               </div>
@@ -262,11 +261,11 @@ export default function FormsPage() {
               </label>
               <div className="mt-2">
                 <label className="inline-flex items-center">
-                  <input type="radio" name="noticias" className="form-radio" />
+                  <input type="radio" name="noticias" className="form-radio" required />
                   <span className="ml-2">SIM</span>
                 </label>
                 <label className="inline-flex items-center ml-6">
-                  <input type="radio" name="noticias" className="form-radio" />
+                  <input type="radio" name="noticias" className="form-radio" re />
                   <span className="ml-2">NÃO</span>
                 </label>
               </div>
@@ -281,8 +280,7 @@ export default function FormsPage() {
               ENVIAR
             </button>
           </div>
-        </form>
-      </div>
-    </div>
+        </Form>
+    </Container>
   );
 }
