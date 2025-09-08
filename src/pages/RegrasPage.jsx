@@ -1,4 +1,7 @@
 import imagemRegras from "../assets/imagem-regras.jpg";
+import Button from "../components/common/Button";
+import { NavLink } from "react-router";
+import TRlinha from "../components/common/TRlinha";
 
 export default function RegrasPage() {
   return (
@@ -66,36 +69,17 @@ export default function RegrasPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Gol</td>
-                    <td className="p-3 text-right font-medium">6,0 pts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Assistência</td>
-                    <td className="p-3 text-right font-medium">3,0 pts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Falta sofrida</td>
-                    <td className="p-3 text-right font-medium">0,5 pts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Pênalti sofrido</td>
-                    <td className="p-3 text-right font-medium">1,0 pts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Hat-trick</td>
-                    <td className="p-3 text-right font-medium">3,0 pts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Finalização</td>
-                    <td className="p-3 text-right font-medium">0,5 pts</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 text-red-600">Pênalti perdido</td>
-                    <td className="p-3 text-right font-medium text-red-600">
-                      -4,0 pts
-                    </td>
-                  </tr>
+                  <TRlinha children1="Gol" children2="6,0 pts" />
+                  <TRlinha children1="Assistência" children2="3,0 pts" />
+                  <TRlinha children1="Falta sofrida" children2="0,5 pts" />
+                  <TRlinha children1="Pênalti sofrido" children2="1,0 pts" />
+                  <TRlinha children1="Hat-trick" children2="3,0 pts" />
+                  <TRlinha children1="Finalização" children2="0,5 pts" />
+                  <TRlinha
+                    className="red"
+                    children1='Pênalti perdido'
+                    children2='-4,0 pts'
+                  />
                 </tbody>
               </table>
             </div>
@@ -115,52 +99,38 @@ export default function RegrasPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Defesa de Pênalti</td>
-                    <td className="p-3 text-right font-medium">5,0 pts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Jogo sem sofrer gols</td>
-                    <td className="p-3 text-right font-medium">4,0 pts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Defesa</td>
-                    <td className="p-3 text-right font-medium">1,2 pts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3">Desarme</td>
-                    <td className="p-3 text-right font-medium">0,5 pts</td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3 text-red-600">Gol contra</td>
-                    <td className="p-3 text-right font-medium text-red-600">
-                      -3,0 pts
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3 text-red-600">Cartão amarelo</td>
-                    <td className="p-3 text-right font-medium text-red-600">
-                      -2,0 pts
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3 text-red-600">Cartão vermelho</td>
-                    <td className="p-3 text-right font-medium text-red-600">
-                      -2,0 pts
-                    </td>
-                  </tr>
-                  <tr className="border-b border-gray-100">
-                    <td className="p-3 text-red-600">Gol sofrido</td>
-                    <td className="p-3 text-right font-medium text-red-600">
-                      -1,0 pts
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 text-red-600">Pênalti cometido</td>
-                    <td className="p-3 text-right font-medium text-red-600">
-                      -1,0 pts
-                    </td>
-                  </tr>
+                  <TRlinha children1="Defesa de Pênalti" children2="5,0 pts" />
+                  <TRlinha
+                    children1="Jogo sem sofrer gols"
+                    children2="4,0 pts"
+                  />
+                  <TRlinha children1="Defesa" children2="1,2 pts" />
+                  <TRlinha children1="Desarme" children2="0,5 pts" />
+                  <TRlinha
+                    className="red"
+                    children1="Gol contra"
+                    children2="-3,0 pts"
+                  />
+                  <TRlinha
+                    className="red"
+                    children1={"Cartão amarelo"}
+                    children2="-2,0 pts"
+                  />
+                  <TRlinha
+                    className="red"
+                    children1={"Cartão vermelho"}
+                    children2="-2,0 pts"
+                  />
+                  <TRlinha
+                    className="red"
+                    children1="Gol sofrido"
+                    children2="-1,0 pts"
+                  />
+                  <TRlinha
+                    className="red"
+                    children1="Pênalti cometido"
+                    children2="-1,0 pts"
+                  />
                 </tbody>
               </table>
             </div>
@@ -222,6 +192,11 @@ export default function RegrasPage() {
               transformação. Não deixe essa chance escapar! Seu futuro digital
               começa agora com um mês de Alura totalmente grátis.
             </p>
+            <div className="flex items-center justify-center">
+              <NavLink to="/team">
+                <Button>Continuar</Button>
+              </NavLink>
+            </div>
           </div>
         </div>
       </div>

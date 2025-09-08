@@ -12,7 +12,7 @@ export default function FormsPageGame() {
     <Container className="bg-green-100">
         <SectionRegistro className="bg-green-600" />
 
-        <Form adress='/cadastrese' className="py-3">
+        <Form adress='/regras' className="py-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormRegistro />
           </div>

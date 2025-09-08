@@ -5,7 +5,7 @@ import InputText from "../components/common/InputText";
 
 export default function FormsLogin() {
   return (
-    <Form adress="/forms">
+    <Form adress="/team">
       <InputText id="email" type="email">
         Email
       </InputText>
