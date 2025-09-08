@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ButtonForms from "../components/common/ButtonForms";
-import Form from "../components/common/form";
 import InputChecked from "../components/common/InputChecked";
 import InputText from "../components/common/InputText";
 import { useNavigate } from "react-router-dom";
@@ -70,8 +69,9 @@ export default function FormsLogin() {
       <InputChecked checked={rememberMe} onChange={handleCheckboxChange}>
         Lembre de mim
       </InputChecked>
-
-      <ButtonForms type="submit">Login</ButtonForms>
+      <div className="flex justify-center">
+        <ButtonForms type="submit">Login</ButtonForms>
+      </div>
     </form>
   );
 }

@@ -1,7 +1,8 @@
 import imagemRegras from "../assets/imagem-regras.jpg";
 import Button from "../components/common/Button";
 import { NavLink } from "react-router";
-import TRlinha from "../components/common/TRlinha";
+import Lista from "../components/componentsRegras/lista";
+import TabelaDePontos from "../core-components/TabelaDePontos";
 
 export default function RegrasPage() {
   return (
@@ -52,89 +53,7 @@ export default function RegrasPage() {
             partida real:
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-2xl font-semibold mb-4 text-green-700">
-                Pontuação de Ataque
-              </h3>
-              <table className="w-full text-left text-gray-600">
-                <thead>
-                  <tr>
-                    <th className="p-3 text-sm font-semibold uppercase tracking-wider border-b-2 border-gray-200">
-                      Ação
-                    </th>
-                    <th className="p-3 text-sm font-semibold uppercase tracking-wider text-right border-b-2 border-gray-200">
-                      Pontos
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <TRlinha children1="Gol" children2="6,0 pts" />
-                  <TRlinha children1="Assistência" children2="3,0 pts" />
-                  <TRlinha children1="Falta sofrida" children2="0,5 pts" />
-                  <TRlinha children1="Pênalti sofrido" children2="1,0 pts" />
-                  <TRlinha children1="Hat-trick" children2="3,0 pts" />
-                  <TRlinha children1="Finalização" children2="0,5 pts" />
-                  <TRlinha
-                    className="red"
-                    children1='Pênalti perdido'
-                    children2='-4,0 pts'
-                  />
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <h3 className="text-2xl font-semibold mb-4 text-green-700">
-                Pontuação de Defesa
-              </h3>
-              <table className="w-full text-left text-gray-600">
-                <thead>
-                  <tr>
-                    <th className="p-3 text-sm font-semibold uppercase tracking-wider border-b-2 border-gray-200">
-                      Ação
-                    </th>
-                    <th className="p-3 text-sm font-semibold uppercase tracking-wider text-right border-b-2 border-gray-200">
-                      Pontos
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <TRlinha children1="Defesa de Pênalti" children2="5,0 pts" />
-                  <TRlinha
-                    children1="Jogo sem sofrer gols"
-                    children2="4,0 pts"
-                  />
-                  <TRlinha children1="Defesa" children2="1,2 pts" />
-                  <TRlinha children1="Desarme" children2="0,5 pts" />
-                  <TRlinha
-                    className="red"
-                    children1="Gol contra"
-                    children2="-3,0 pts"
-                  />
-                  <TRlinha
-                    className="red"
-                    children1={"Cartão amarelo"}
-                    children2="-2,0 pts"
-                  />
-                  <TRlinha
-                    className="red"
-                    children1={"Cartão vermelho"}
-                    children2="-2,0 pts"
-                  />
-                  <TRlinha
-                    className="red"
-                    children1="Gol sofrido"
-                    children2="-1,0 pts"
-                  />
-                  <TRlinha
-                    className="red"
-                    children1="Pênalti cometido"
-                    children2="-1,0 pts"
-                  />
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <TabelaDePontos />
 
           <h2 className="text-3xl font-bold text-purple-800 mt-16 mb-8 text-center">
             Um Mergulho no Mundo da Tecnologia: Seu Mês Gratuito no Alura!
@@ -149,42 +68,12 @@ export default function RegrasPage() {
             </p>
 
             <ul className="space-y-3">
-              <li className="flex items-start">
-                <span className="text-green-500 font-bold mr-3 mt-1">
-                  &#10003;
-                </span>
-                <span>Acessar todo o catálogo de cursos da Alura.</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 font-bold mr-3 mt-1">
-                  &#10003;
-                </span>
-                <span>Aprender com instrutores experientes e renomados.</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 font-bold mr-3 mt-1">
-                  &#10003;
-                </span>
-                <span>Participar de fóruns e comunidades.</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 font-bold mr-3 mt-1">
-                  &#10003;
-                </span>
-                <span>Colocar a mão na massa com projetos práticos.</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 font-bold mr-3 mt-1">
-                  &#10003;
-                </span>
-                <span>Aprender no seu ritmo e horário.</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 font-bold mr-3 mt-1">
-                  &#10003;
-                </span>
-                <span>Descobrir um novo futuro profissional.</span>
-              </li>
+              <Lista>Acessar todo o catálogo de cursos da Alura.</Lista>
+              <Lista>Aprender com instrutores experientes e renomados.</Lista>
+              <Lista>Participar de fóruns e comunidades.</Lista>
+              <Lista>Colocar a mão na massa com projetos práticos.</Lista>
+              <Lista>Aprender no seu ritmo e horário.</Lista>
+              <Lista>Descobrir um novo futuro profissional.</Lista>
             </ul>
 
             <p>

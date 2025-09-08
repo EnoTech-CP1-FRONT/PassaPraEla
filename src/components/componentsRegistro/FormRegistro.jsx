@@ -1,7 +1,8 @@
 import { useState } from "react";
 import InputText from "../common/InputText";
+import { useNavigate } from "react-router-dom";
 
-export default function FormRegistro() {
+export default function FormRegistro({ children, adress }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,6 +11,7 @@ export default function FormRegistro() {
     cpf: "",
     senha: "",
   });
+  const navigate = useNavigate();
 
   // Função para atualizar o estado quando o usuário digita
   const handleChange = (e) => {
@@ -37,6 +39,10 @@ export default function FormRegistro() {
 
       const data = await response.json();
       alert(data.message); // Exibe uma mensagem de sucesso ou erro do backend
+      // Navega para a próxima página apenas se a requisição foi bem-sucedida (ex: status 201 Created)
+      if (response.ok) {
+        navigate(adress);
+      }
     } catch (error) {
       console.error("Erro ao enviar formulário:", error);
       alert("Falha na comunicação com o servidor.");
@@ -99,6 +105,7 @@ export default function FormRegistro() {
           Senha
         </InputText>
       </div>
+      {children}
       <div className="flex justify-center items-center">
         <button
           type="submit"

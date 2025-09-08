@@ -4,6 +4,7 @@ import { open } from "sqlite";
 import bcrypt from "bcrypt";
 import sqlite3 from "sqlite3";
 
+
 const app = express();
 const port = 3001; // Porta para o backend rodar
 let db;
@@ -26,7 +27,7 @@ app.post("/cadastrar", async (req, res) => {
     if (row) {
       return res
         .status(409)
-        .json({ message: "Este email já está cadastrado." });
+        .json({ message: "Este email já está cadastrado."});
     }
 
     // Criptografa a senha antes de salvar

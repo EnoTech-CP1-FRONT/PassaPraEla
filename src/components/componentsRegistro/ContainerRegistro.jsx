@@ -1,6 +1,3 @@
-import { Children } from "react";
-import Form from "../common/form";
-
 
 export default function Container({children, className}) {
     return(

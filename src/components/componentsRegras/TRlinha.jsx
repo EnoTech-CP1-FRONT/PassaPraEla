@@ -3,6 +3,18 @@ export default function TRlinha({
   children1,
   children2,
 }) {
+  if (className == "gray") {
+    return(
+      <tr>
+        <th className="p-3 text-sm font-semibold uppercase tracking-wider border-b-2 border-gray-200">
+          {children1}
+        </th>
+        <th className="p-3 text-sm font-semibold uppercase tracking-wider text-right border-b-2 border-gray-200">
+          {children2}
+        </th>
+      </tr>
+    )
+  }
   if (className == "red") {
     return (
       <tr className="border-b border-gray-100">

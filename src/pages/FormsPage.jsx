@@ -1,10 +1,8 @@
 import Container from "../components/componentsRegistro/ContainerRegistro";
 import SectionRegistro from "../components/componentsRegistro/SectionRegistro";
-import Form from "../components/common/form";
 import InputText from "../components/common/InputText";
 import FormRegistro from "../components/componentsRegistro/FormRegistro";
 import DadosLGPD from "../components/componentsRegistro/Dadoslgpd";
-import ButtonForms from "../components/common/ButtonForms";
 import AdicionarJogadoras from "../core-components/AdicionarJogadoras";
 import InputRadio from "../components/common/InputRadio";
 
@@ -13,14 +11,7 @@ export default function FormsPage() {
     <Container className="bg-purple-100">
       <SectionRegistro className="bg-fuchsia-800/50" />
 
-      
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <InputText id="name" className="registro">Nome Completo</InputText>
-          <InputText id="email" type="email" className="registro">Email para contato</InputText>
-          <InputText id="telefone" type="tel" className="registro">Número de telefone</InputText>
-          <InputText id="data" type="date" className="registro">Data de Nacimento</InputText>
-          <InputText id="senha" type="password" className="registro">Senha</InputText>
-                 
+        <FormRegistro adress="/cadastrese">      
           <div className="md:col-span-2">
             <label className="block text-gray-700">
               Você autoriza ser contatado(a) por marcas, clubes ou projetos
@@ -37,7 +28,7 @@ export default function FormsPage() {
           <InputText id="cidade" className="registro">
             Cidade que vive
           </InputText>
-        </div>
+        
 
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-4">DADOS DO TIME</h2>
@@ -51,11 +42,7 @@ export default function FormsPage() {
         </div>
 
         <DadosLGPD />
-
-        <div className="mt-9 text-center">
-          <ButtonForms className="registro">ENVIAR</ButtonForms>
-        </div>
-      
+      </FormRegistro>
     </Container>
   );
 }
