@@ -12,12 +12,12 @@ export default function FormsPageGame() {
     <Container className="bg-green-100">
       <SectionRegistro className="bg-green-600" />
 
+        
+
+        
+        <FormRegistro />
+        
         <Form adress='/regras' className="py-3">
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormRegistro />
-        </div>
-
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-4">DADOS DO TIME</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

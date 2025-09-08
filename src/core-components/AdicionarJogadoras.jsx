@@ -15,14 +15,14 @@ export default function AdicionarJogadoras() {
                 <div key={index} className="mt-6 p-5 rounded-2xl bg-purple-50">
                     <h3 className="text-xl font-bold mb-4">Jogadora {index + 1}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <InputText id="email" type="email" className="registro">Email para contato</InputText>
-                        <InputText id="telefone" type="tel" className="registro">Número de telefone</InputText>
-                        <InputText id="posicao" className="registro">Posição de preferência em campo</InputText>
-                        <InputText id="idade" type="number" className="registro">Idade</InputText>
-                        <InputText id="experiencia" className="registro">Possui experiência em futebol?</InputText>
-                        <InputText id="numeroDaRoupa" className="registro">Número da roupa para o uniforme</InputText>
-                        <InputText id="participou" className="registro">Já participou de campeonatos semelhantes?</InputText>
-                        <InputText id="saude" className="registro">Possui alguma condição médica:</InputText>
+                        <InputText id={`email ${index}`} type="email" className="registro">Email para contato</InputText>
+                        <InputText id={`telefone ${index}`} type="tel" className="registro">Número de telefone</InputText>
+                        <InputText id={`posicao ${index}`} className="registro">Posição de preferência em campo</InputText>
+                        <InputText id={`idade ${index}`} type="number" className="registro">Idade</InputText>
+                        <InputText id={`experiencia ${index}`} className="registro">Possui experiência em futebol?</InputText>
+                        <InputText id={`numeroDaRoupa ${index}`} className="registro">Número da roupa para o uniforme</InputText>
+                        <InputText id={`participou ${index}`} className="registro">Já participou de campeonatos semelhantes?</InputText>
+                        <InputText id={`saude ${index}`} className="registro">Possui alguma condição médica:</InputText>
                         
                         <div className="md:col-span-2">
                             <label className="block text-gray-700">

@@ -1,21 +1,35 @@
-const classNameRegistroLabel = `block text-gray-700`
-const classNameRegistroInput = `w-full mt-1 p-2 border rounded`
+export default function InputText({
+  children,
+  className,
+  id,
+  type = "text",
+  required = true,
+  value,
+  onChange,
+}) {
+  // Define as classes padrão
+  let labelClasses = "mb-1 font-semibold";
+  let inputClasses = "p-2 border-none bg-8 rounded-md";
 
-export default function InputText({ children, className="p-2 border-none bg-8 rounded-md", id, type = "text", required = true }) {
-    if(className=='registro'){
-        
-        return(
-            <div className="flex flex-col">
-                <label htmlFor={id} className={classNameRegistroLabel}>{children}</label>
-                <input id={id} type={type} className={classNameRegistroInput} required={required}/>
-            </div>
-        )
-    }
-    
-    return( 
-        <div className="flex flex-col">
-            <label htmlFor={id} className="mb-1 font-semibold">{children}</label>
-            <input id={id} type={type} className={className} required={required}/>
-        </div>
-    )
+  // Se a prop 'className' for 'registro', usa os estilos do registro
+  if (className === "registro") {
+    labelClasses = "block text-gray-700";
+    inputClasses = "w-full mt-1 p-2 border rounded";
+  }
+
+  return (
+    <div className="flex flex-col">
+      <label htmlFor={id} className={labelClasses}>
+        {children}
+      </label>
+      <input
+        id={id}
+        type={type}
+        value={value}
+        onChange={onChange}
+        className={inputClasses}
+        required={required}
+      />
+    </div>
+  );
 }

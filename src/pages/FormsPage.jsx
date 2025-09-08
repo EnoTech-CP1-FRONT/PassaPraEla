@@ -13,9 +13,14 @@ export default function FormsPage() {
     <Container className="bg-purple-100">
       <SectionRegistro className="bg-fuchsia-800/50" />
 
-      <Form adress="/cadastrese" className="py-3">
+      
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormRegistro />
+          <InputText id="name" className="registro">Nome Completo</InputText>
+          <InputText id="email" type="email" className="registro">Email para contato</InputText>
+          <InputText id="telefone" type="tel" className="registro">Número de telefone</InputText>
+          <InputText id="data" type="date" className="registro">Data de Nacimento</InputText>
+          <InputText id="senha" type="password" className="registro">Senha</InputText>
+                 
           <div className="md:col-span-2">
             <label className="block text-gray-700">
               Você autoriza ser contatado(a) por marcas, clubes ou projetos
@@ -50,7 +55,7 @@ export default function FormsPage() {
         <div className="mt-9 text-center">
           <ButtonForms className="registro">ENVIAR</ButtonForms>
         </div>
-      </Form>
+      
     </Container>
   );
 }
