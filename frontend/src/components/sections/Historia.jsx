@@ -28,7 +28,7 @@ export default function Historia() {
           </article>
           {/* Card Direito */}
           <div className="flex flex-col justify-between">
-            <article className="bg-6 p-6 rounded-lg hover:shadow-lg hover:scale-105 transition-transform duration-300">
+            <article className="bg-6 p-6 rounded-lg hover:shadow-lg hover:scale-105 mb-2 transition-transform duration-300">
               <h3 className="text-xl mb-3">BRASILEIRÃO FEMININO NEOENERGIA</h3>
 
               <p className="text-gray-300">

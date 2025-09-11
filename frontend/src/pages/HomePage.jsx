@@ -27,7 +27,7 @@ export default function HomePage() {
       </section>
       <section className="bg-gray-100">
         <ProximosJogos />
-        <div className="max-w-6xl mx-auto flex justify-between gap-8 px-6 md:px-10 py-12 ml-20 mr-20">
+        <div className="max-w-6xl mx-auto flex max-lg:flex-col justify-between gap-8 py-12 ml-20 mr-20">
           <Destaques />
           <Curiosidades />
         </div>
