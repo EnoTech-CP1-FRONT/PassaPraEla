@@ -2,7 +2,6 @@ import Container from "../components/componentsRegistro/ContainerRegistro";
 import SectionRegistro from "../components/componentsRegistro/SectionRegistro";
 import InputText from "../components/common/InputText";
 import FormRegistro from "../components/componentsRegistro/FormRegistro";
-import DadosLGPD from "../components/componentsRegistro/Dadoslgpd";
 import AdicionarJogadoras from "../core-components/AdicionarJogadoras";
 import InputRadio from "../components/common/InputRadio";
 
@@ -41,7 +40,7 @@ export default function FormsPage() {
           <AdicionarJogadoras />
         </div>
 
-        <DadosLGPD />
+
       </FormRegistro>
     </Container>
   );

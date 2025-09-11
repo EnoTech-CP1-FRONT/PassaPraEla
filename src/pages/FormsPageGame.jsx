@@ -2,7 +2,6 @@ import Container from "../components/componentsRegistro/ContainerRegistro";
 import SectionRegistro from "../components/componentsRegistro/SectionRegistro";
 import InputText from "../components/common/InputText";
 import FormRegistro from "../components/componentsRegistro/FormRegistro";
-import DadosLGPD from "../components/componentsRegistro/Dadoslgpd";
 import Termos from "../core-components/Termos";
 
 export default function FormsPageGame() {
@@ -20,7 +19,6 @@ export default function FormsPageGame() {
           </div>
         </div>
 
-        <DadosLGPD />
 
         <Termos />
 

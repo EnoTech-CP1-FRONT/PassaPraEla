@@ -2,7 +2,7 @@ import InputChecked from "../components/common/InputChecked";
 
 const legalInfo = {
   terms: {
-    title: "Termos de Uso",
+    title: "Termos de uso e privacidade",
     sections: [
       {
         title: "1. Aceitação dos Termos",
@@ -29,33 +29,28 @@ const legalInfo = {
         content:
           "Reservamo-nos o direito de modificar ou substituir estes termos a qualquer momento. O uso continuado do serviço após a publicação de quaisquer alterações constitui aceitação desses novos termos.",
       },
-    ],
-  },
-  privacy: {
-    title: "Política de Privacidade",
-    sections: [
       {
-        title: "1. Coleta de Informações",
+        title: "6. Coleta de Informações",
         content:
           "Coletamos informações que você nos fornece diretamente ao criar uma conta, como nome e endereço de e-mail. Também podemos coletar dados de uso do jogo automaticamente.",
       },
       {
-        title: "2. Uso das Informações",
+        title: "7. Uso das Informações",
         content:
           "Utilizamos as informações para operar, manter e fornecer os recursos do jogo, bem como para nos comunicarmos com você sobre atualizações, promoções e suporte ao cliente.",
       },
       {
-        title: "3. Compartilhamento de Informações",
+        title: "8. Compartilhamento de Informações",
         content:
           "Não compartilhamos suas informações pessoais com terceiros, exceto quando necessário para operar o serviço (como provedores de hospedagem) ou quando exigido por lei.",
       },
       {
-        title: "4. Segurança",
+        title: "9. Segurança",
         content:
           "Tomamos medidas razoáveis para proteger suas informações contra perda, roubo, uso indevido e acesso não autorizado. No entanto, nenhum sistema de segurança é impenetrável.",
       },
       {
-        title: "5. Seus Direitos",
+        title: "10. Seus Direitos",
         content:
           "Você tem o direito de acessar, corrigir ou excluir suas informações pessoais a qualquer momento através das configurações da sua conta ou entrando em contato conosco.",
       },
@@ -64,39 +59,24 @@ const legalInfo = {
 };
 
 export default function Termos() {
-    return(
-      <>
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-4">{legalInfo.terms.title}</h2>
-          <div className="h-48 overflow-y-scroll border p-4 rounded-lg bg-gray-50">
-            {legalInfo.terms.sections.map((section, index) => (
-              <div key={index} className="mb-4">
-                <h3 className="font-bold">{section.title}</h3>
-                <p className="text-gray-600 text-sm">{section.content}</p>
-              </div>
-            ))}
-          </div>
-                      
-          <InputChecked id="terms" className='form-checkbox mt-4'>Eu li e aceito os Termos de Uso.</InputChecked>
-                      
+  return (
+    <>
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-4">{legalInfo.terms.title}</h2>
+        <div className="h-48 overflow-y-scroll border p-4 rounded-lg bg-gray-50">
+          {legalInfo.terms.sections.map((section, index) => (
+            <div key={index} className="mb-4">
+              <h3 className="font-bold">{section.title}</h3>
+              <p className="text-gray-600 text-sm">{section.content}</p>
+            </div>
+          ))}
         </div>
 
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-4">
-            {legalInfo.privacy.title}
-          </h2>
-          <div className="h-48 overflow-y-scroll border p-4 rounded-lg bg-gray-50">
-            {legalInfo.privacy.sections.map((section, index) => (
-              <div key={index} className="mb-4">
-                <h3 className="font-bold">{section.title}</h3>
-                <p className="text-gray-600 text-sm">{section.content}</p>
-              </div>
-            ))}
-          </div>
-                    
-          <InputChecked id="privacy" className='form-checkbox mt-4'>Eu li e aceito a Política de Privacidade.</InputChecked>
-                      
-        </div>
-      </>
-    )
+        <InputChecked id="terms" className="form-checkbox mt-4">
+          Eu li e aceito os Termos de Uso e privacidade.
+        </InputChecked>
+      </div>
+
+    </>
+  );
 }
