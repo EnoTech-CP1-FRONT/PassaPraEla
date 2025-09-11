@@ -1,5 +1,5 @@
 import Button from "../components/common/Button";
-import { NavLink } from "react-router";
+import { NavLink } from 'react-router-dom';
 
 export default function TituloPrincipal() {
   

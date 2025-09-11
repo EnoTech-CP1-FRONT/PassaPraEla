@@ -1,6 +1,6 @@
 import imagemRegras from "../assets/imagem-regras.jpg";
 import Button from "../components/common/Button";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 import Lista from "../components/componentsRegras/lista";
 import TabelaDePontos from "../core-components/TabelaDePontos";
 

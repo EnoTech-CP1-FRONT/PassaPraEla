@@ -1,6 +1,6 @@
 import CapaCadastrese from "../assets/capaCadastrese.png";
 import LogoPassaABolaBlack from "../assets/logo-passa-a-bola-black.png";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 import FormsLogin from "../core-components/FormsLogin";
 
 export default function Cadastrese() {
