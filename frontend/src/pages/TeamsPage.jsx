@@ -49,7 +49,7 @@ function TeamsPage() {
                   {jogadora ? (
                     <>
                       <img
-                        src={jogadora.imagemUrl}
+                        src={"http://localhost:3001" + jogadora.url_imagem}
                         alt={jogadora.nome}
                         className="rounded-full h-16 w-16 object-cover border-2 "
                       />
