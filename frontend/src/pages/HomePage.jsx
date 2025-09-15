@@ -8,6 +8,7 @@ import Historia from "../components/sections/Historia";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import Canais from "../components/sections/Canais";
+import NoticiasFutebol from "../components/common/New";
 
 export default function HomePage() {
   return (
@@ -26,6 +27,7 @@ export default function HomePage() {
         <TituloPrincipal />
       </section>
       <section className="bg-gray-100">
+        <NoticiasFutebol />
         <ProximosJogos />
         <div className="max-w-6xl mx-auto flex max-lg:flex-col justify-between gap-8 py-12 ml-20 mr-20">
           <Destaques />
