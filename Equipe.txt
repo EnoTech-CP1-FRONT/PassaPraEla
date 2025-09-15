@@ -1,0 +1,15 @@
+RM:565191 Nome: Gabriel Akira
+RM:561820 Nome: Gustavo Santos
+RM:556645 Nome: Mauro Carlos
+RM:562098 Nome: Ana Luiza Tibiriçá
+
+Time: Veltrix
+
+Sala: 1ESPJ
+
+servidor backend(hospedado na render): https://backendpassapraela.onrender.com
+frontend(Hospedado na Vercel): https://passa-pra-ela-oficial.vercel.app/
+Link do repositório: https://github.com/EnoTech-CP1-FRONT/PassaPraEla
+
+Apis: Api de login, cadastro e jogadoras está localizada no backend
+Api de noiticia so funciona em teste em produção precisa adquirir um plano maior
