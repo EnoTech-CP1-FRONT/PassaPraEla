@@ -8,7 +8,7 @@ import sqlite3 from "sqlite3";
 
 
 const app = express();
-const port = 3001; // Porta para o backend rodar
+const port = process.env.PORT || 3001;
 let db;
 
 // Middlewares

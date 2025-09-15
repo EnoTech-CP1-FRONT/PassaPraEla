@@ -60,7 +60,7 @@ function NoticiasFutebolFeminino() {
   return (
     <div className="max-w-7xl my-8 mx-auto px-4 font-sans">
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
-        Últimas Notícias do Futebol Feminino ⚽
+        Últimas Notícias do Futebol Feminino
       </h1>
 
       {articles.length === 0 && !loading ? (
