@@ -9,6 +9,7 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import Canais from "../components/sections/Canais";
 import NoticiasFutebol from "../components/common/New";
+import ApiNoticia from "../components/api/ApiNoticia"
 
 export default function HomePage() {
   return (
@@ -29,9 +30,8 @@ export default function HomePage() {
       <section className="bg-gray-100">
         <NoticiasFutebol />
         <ProximosJogos />
-        <div className="max-w-6xl mx-auto flex max-lg:flex-col justify-between gap-8 py-12 ml-20 mr-20">
-          <Destaques />
-          <Curiosidades />
+        <div className="max-w-6xl mx-auto flex max-lg:flex-col justify-center gap-8 mb-20">
+          <ApiNoticia></ApiNoticia>
         </div>
         <Historia />
         <Canais />

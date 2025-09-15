@@ -19,6 +19,7 @@ function App() {
           <Route path="/regras" element={<RegrasPage />} />
           <Route path="/forms-game" element={<FormsPageGame />} />
 
+
           {/* Todas as rotas abaixo têm acesso aos dados do TeamProvider */}
           <Route path="/teams" element={<TeamsPage />} />
           <Route path="/marketplace" element={<MarketPage />} />
