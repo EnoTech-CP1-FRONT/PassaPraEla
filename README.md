@@ -281,7 +281,7 @@ Se quiser ajudar com issues abertas, crie uma branch específica para cada taref
 
 ## 📞 Contato
 
-* Gabriel Akira — [gabriel@example.com](mailto:gabriel@example.com) (substitua pelo e‑mail real)
+* Gabriel Akira — [gakirakiyohara@gmail.com](mailto:gakirakiyohara@gmail.com)
 * Para dúvidas sobre o deploy, verifique os logs no Render (backend) e Vercel (frontend).
 
 ---
@@ -290,14 +290,6 @@ Se quiser ajudar com issues abertas, crie uma branch específica para cada taref
 
 Todos os direitos reservados © 2025 - Equipe Veltrix.  
 Este projeto não pode ser utilizado, modificado ou distribuído sem autorização prévia.
-
----
-
-## 🖼️ Sugestões para o README (opcionais)
-
-* Adicionar screenshots do frontend (colocar na pasta `assets/` e referenciar)
-* Banner/Logo no topo (imagem gerada ou ASCII art)
-* Badges de workflow/CI (se adicionarem GitHub Actions)
 
 ---
 
