@@ -1,5 +1,6 @@
 // src/components/sections/Historia.jsx
 import PrimeiraEquipe from "../../assets/historia.png";
+import { NavLink } from 'react-router-dom';
 
 export default function Historia() {
   return (
@@ -47,9 +48,11 @@ export default function Historia() {
                 competição por duas vezes (1999 e 2013) e o Canadá uma (2015).
               </p>
               <div className="flex items-center justify-center text-center ">
-                <button className="hover:bg-violet-700 transition-colors duration-200 cursor-pointer p-2 pl-8 pr-8 bg-7 text-[1.5rem] rounded-lg">
-                  Leia mais
-                </button>
+                <NavLink to="https://interativos.ge.globo.com/futebol/selecao-brasileira/especial/historia-do-futebol-feminino">
+                  <button className="hover:bg-violet-700 transition-colors duration-200 cursor-pointer p-2 pl-8 pr-8 bg-7 text-[1.5rem] rounded-lg">
+                    Leia mais
+                  </button>
+                </NavLink>
               </div>
             </article>
           </div>

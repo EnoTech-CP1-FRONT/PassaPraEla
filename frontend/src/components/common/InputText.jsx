@@ -8,7 +8,7 @@ export default function InputText({
   onChange,
 }) {
   // Define as classes padrão
-  let labelClasses = "mb-1 font-semibold";
+  let labelClasses = "mb-1 text-lg";
   let inputClasses = "p-2 border-none bg-8 rounded-md";
 
   // Se a prop 'className' for 'registro', usa os estilos do registro

@@ -14,7 +14,7 @@ export default function Canais() {
       description: "Ouça nosso podcast com episódios semanais, análises e convidadas especiais.",
       buttonText: "Ouvir no Spotify",
       buttonStyle: "bg-gray-800 hover:bg-black text-white",
-      url: "#"
+      url: "https://open.spotify.com/show/18H1ysI9zyDIRahuCnZGQr?si=9feb46fb20514638"
     },
     {
       platform: "YouTube",
@@ -24,7 +24,7 @@ export default function Canais() {
       description: "Assista aos cortes, melhores momentos e programas completos em nosso canal.",
       buttonText: "Assistir no YouTube",
       buttonStyle: "bg-gray-800 hover:bg-black text-white",
-      url: "#"
+      url: "https://www.youtube.com/@passabola"
     }
   ];
 

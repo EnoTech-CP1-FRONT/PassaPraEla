@@ -7,9 +7,9 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: "/", text: "Destaques" },
-    { href: "/", text: "História" },
-    { href: "/regras", text: "Regras" },
+    { href: "https://diariodofutebolfeminino.com.br/", text: "Destaques" },
+    { href: "https://interativos.ge.globo.com/futebol/selecao-brasileira/especial/historia-do-futebol-feminino", text: "História" },
+    { href: "/cadastrese", text: "Login" },
   ];
 
   return (
@@ -45,7 +45,7 @@ export default function Header() {
           </Link>
         ))}
         <Link
-          to="/cadastrese"
+          to="/forms-game"
           onClick={() => setIsMenuOpen(false)}
           className="bg-purple-600 px-6 py-2 rounded-full font-semibold text-lg md:text-[18px] hover:bg-purple-700 transition-colors"
         >

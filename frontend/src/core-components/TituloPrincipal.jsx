@@ -11,7 +11,7 @@ export default function TituloPrincipal() {
       <p className="text-lg sm:text-xl md:text-2xl text-white mt-4 mb-8 max-w-md">
         Faça a sua conta agora e entre para o time
       </p>
-      <NavLink to='/cadastrese'>
+      <NavLink to='/forms-game'>
         <Button className="px-8 py-3 text-lg sm:text-xl font-semibold">
           Criar conta
         </Button>

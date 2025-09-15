@@ -6,10 +6,10 @@ import { FaYoutube, FaSpotify, FaEnvelope } from "react-icons/fa";
 
 export default function Footer() {
   const developers = [
-    { name: "Gabriel Akira", githubUrl: "#" },
-    { name: "Ana Luiza", githubUrl: "#" },
-    { name: "Gustavo Santos", githubUrl: "#" },
-    { name: "Mauro Carlos", githubUrl: "#" },
+    { name: "Gabriel Akira", githubUrl: "https://github.com/Gakira06" },
+    { name: "Ana Luiza", githubUrl: "https://github.com/Naluaqui" },
+    { name: "Gustavo Santos", githubUrl: "https://github.com/gugasantos24" },
+    { name: "Mauro Carlos", githubUrl: "https://github.com/Nogrog150" },
   ];
 
   return (
@@ -30,10 +30,9 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-white mb-4">Navegação</h3>
             <ul className="space-y-3">
-              <li><Link to="/" className="hover:text-purple-400 transition-colors">Destaques</Link></li>
-              <li><Link to="/" className="hover:text-purple-400 transition-colors">História</Link></li>
-              <li><Link to="/regras" className="hover:text-purple-400 transition-colors">Regras</Link></li>
-              <li><Link to="/cadastrese" className="hover:text-purple-400 transition-colors">Criar Conta</Link></li>
+              <li><Link to="https://diariodofutebolfeminino.com.br/" className="hover:text-purple-400 transition-colors">Destaques</Link></li>
+              <li><Link to="https://interativos.ge.globo.com/futebol/selecao-brasileira/especial/historia-do-futebol-feminino" className="hover:text-purple-400 transition-colors">História</Link></li>
+              <li><Link to="/forms-game" className="hover:text-purple-400 transition-colors">Criar Conta</Link></li>
             </ul>
           </div>
           
@@ -46,7 +45,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <FaSpotify size={20} className="text-green-500" />
-                <a href="#" className="hover:text-purple-400 transition-colors">Spotify</a>
+                <a href="https://open.spotify.com/show/18H1ysI9zyDIRahuCnZGQr?si=9feb46fb20514638" className="hover:text-purple-400 transition-colors">Spotify</a>
               </li>
               <li className="flex items-center gap-3">
                 <FaEnvelope size={20} className="text-gray-400" />
