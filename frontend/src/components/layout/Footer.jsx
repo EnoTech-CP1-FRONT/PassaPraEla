@@ -13,53 +13,93 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-gray-900 text-gray-100 font-sans">
       <div className="max-w-7xl mx-auto py-12 px-6 md:px-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <Icon svg={Logo} alt="Logo Passa a Bola" className="w-10 h-10" />
-              <span className="font-bold text-xl text-white">PASSA A BOLA</span>
+              <span className="text-xl text-white">PASSA A BOLA</span>
             </div>
             <p className="text-sm">
-              Promovendo a visibilidade e a paixão pelo futebol feminino através de um fantasy game inovador.
+              Promovendo a visibilidade e a paixão pelo futebol feminino através
+              de um fantasy game inovador.
             </p>
           </div>
 
           <div>
-            <h3 className="font-bold text-white mb-4">Navegação</h3>
+            <h3 className="text-lg text-white mb-4">Navegação</h3>
             <ul className="space-y-3">
-              <li><Link to="https://diariodofutebolfeminino.com.br/" className="hover:text-purple-400 transition-colors">Destaques</Link></li>
-              <li><Link to="https://interativos.ge.globo.com/futebol/selecao-brasileira/especial/historia-do-futebol-feminino" className="hover:text-purple-400 transition-colors">História</Link></li>
-              <li><Link to="/forms-game" className="hover:text-purple-400 transition-colors">Criar Conta</Link></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-bold text-white mb-4">Contato e Mídia</h3>
-            <ul className="space-y-3">
-              <li className="flex items-center gap-3">
-                <FaYoutube size={20} className="text-red-600" />
-                <a href="https://www.youtube.com/@passabola" className="hover:text-purple-400 transition-colors">YouTube</a>
+              <li>
+                <Link
+                  to="https://diariodofutebolfeminino.com.br/"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  Destaques
+                </Link>
               </li>
-              <li className="flex items-center gap-3">
-                <FaSpotify size={20} className="text-green-500" />
-                <a href="https://open.spotify.com/show/18H1ysI9zyDIRahuCnZGQr?si=9feb46fb20514638" className="hover:text-purple-400 transition-colors">Spotify</a>
+              <li>
+                <Link
+                  to="https://interativos.ge.globo.com/futebol/selecao-brasileira/especial/historia-do-futebol-feminino"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  História
+                </Link>
               </li>
-              <li className="flex items-center gap-3">
-                <FaEnvelope size={20} className="text-gray-400" />
-                <a href="mailto:passaabola@gmail.com" className="hover:text-purple-400 transition-colors">passaabola@gmail.com</a>
+              <li>
+                <Link
+                  to="/forms-game"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  Criar Conta
+                </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-bold text-white mb-4">Desenvolvedores</h3>
+            <h3 className="text-lg text-white mb-4">Contato e Mídia</h3>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-3">
+                <FaYoutube size={20} className="text-red-600" />
+                <a
+                  href="https://www.youtube.com/@passabola"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  YouTube
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <FaSpotify size={20} className="text-green-500" />
+                <a
+                  href="https://open.spotify.com/show/18H1ysI9zyDIRahuCnZGQr?si=9feb46fb20514638"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  Spotify
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <FaEnvelope size={20} className="text-gray-400" />
+                <a
+                  href="mailto:passaabola@gmail.com"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  passaabola@gmail.com
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg text-white mb-4">Desenvolvedores</h3>
             <ul className="space-y-3">
               {developers.map((dev) => (
                 <li key={dev.name} className="flex items-center gap-3">
-                  <a href={dev.githubUrl} aria-label={`GitHub de ${dev.name}`} className="hover:opacity-80 transition-opacity">
+                  <a
+                    href={dev.githubUrl}
+                    aria-label={`GitHub de ${dev.name}`}
+                    className="hover:opacity-80 transition-opacity"
+                  >
                     <Icon svg={LogoGitHub} className="w-5 h-5" />
                   </a>
                   <span>{dev.name}</span>
@@ -68,9 +108,12 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        
+
         <div className="mt-12 border-t border-gray-800 pt-8 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Passa a Bola. Todos os direitos reservados.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Passa a Bola. Todos os direitos
+            reservados.
+          </p>
         </div>
       </div>
     </footer>

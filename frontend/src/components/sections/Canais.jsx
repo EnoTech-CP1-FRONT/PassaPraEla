@@ -57,7 +57,7 @@ export default function Canais() {
                 />
                 <div className="p-6">
                   <span
-                    className={`w-full text-center block py-3 px-4 rounded-lg font-semibold transition-colors duration-300 ${channel.buttonStyle}`}
+                    className={`w-full text-center block py-3 px-4 rounded-lg text-lg transition-colors duration-300 ${channel.buttonStyle}`}
                   >
                     {channel.buttonText}
                   </span>
