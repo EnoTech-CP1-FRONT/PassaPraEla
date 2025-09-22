@@ -4,29 +4,34 @@ import FormsPage from "./pages/FormsPage";
 import RegrasPage from "./pages/RegrasPage";
 import Cadastrese from "./pages/Cadastrese";
 import FormsPageGame from "./pages/FormsPageGame";
+import Loja from "./pages/Loja";
+import CarrinhoDeCompras from "./pages/CarrinhoDeCompras";
 import TeamsPage from "./pages/TeamsPage";
 import MarketPage from "./pages/MarketPage";
-import { TeamProvider } from "./context/TeamContext";
+import { TeamProvider } from "./context/TeamContext"; // Já existente
+import { CartProvider } from "./context/CartContext"; // Nosso novo provider
 
 function App() {
   return (
     <Router>
-      <TeamProvider>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/cadastrese" element={<Cadastrese />} />
-          <Route path="/forms" element={<FormsPage />} />
-          <Route path="/regras" element={<RegrasPage />} />
-          <Route path="/forms-game" element={<FormsPageGame />} />
-
-
-          {/* Todas as rotas abaixo têm acesso aos dados do TeamProvider */}
-          <Route path="/teams" element={<TeamsPage />} />
-          <Route path="/marketplace" element={<MarketPage />} />
-          <Route path="/team" element={<TeamsPage />} /> {/* Se necessário, ajuste os paths */}
-          <Route path="/market" element={<MarketPage />} />
-        </Routes>
-      </TeamProvider>
+      <CartProvider>
+        <TeamProvider>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/cadastrese" element={<Cadastrese />} />
+            <Route path="/forms" element={<FormsPage />} />
+            <Route path="/regras" element={<RegrasPage />} />
+            <Route path="/forms-game" element={<FormsPageGame />} />
+            <Route path="/loja" element={<Loja />} />
+            <Route path="/carrinhoDecompras" element={<CarrinhoDeCompras />} />
+            {/* Todas as rotas abaixo têm acesso aos dados do TeamProvider */}
+            <Route path="/teams" element={<TeamsPage />} />
+            <Route path="/marketplace" element={<MarketPage />} />
+            <Route path="/team" element={<TeamsPage />} />{" "}
+            <Route path="/market" element={<MarketPage />} />
+          </Routes>
+        </TeamProvider>
+      </CartProvider>
     </Router>
   );
 }

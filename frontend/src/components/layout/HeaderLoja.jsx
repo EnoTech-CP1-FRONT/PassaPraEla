@@ -1,14 +1,15 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import LogoPassaABola from "../../assets/icons/logo-passa-a-bola.svg";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import CartCompras from "../../assets/icons/cartCompras.svg?react";
+import Icon from "../common/Icon";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 
-export default function Header() {
+export default function HeaderLoja() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: "https://diariodofutebolfeminino.com.br/", text: "Destaques" },
-    { href: "/loja", text: "Loja" },
+    { href: "/", text: "Home" },
     { href: "/cadastrese", text: "Login" },
   ];
 
@@ -24,7 +25,6 @@ export default function Header() {
           Passa a Bola
         </span>
       </Link>
-      
       <nav
         className={`
           fixed top-0 left-0 w-full h-screen bg-black/90 backdrop-blur-lg
@@ -44,21 +44,20 @@ export default function Header() {
             {link.text}
           </Link>
         ))}
-        <Link
-          to="/forms-game"
-          onClick={() => setIsMenuOpen(false)}
-          className="bg-purple-600 px-6 py-2 rounded-full font-semibold text-lg md:text-[18px] hover:bg-purple-700 transition-colors"
-        >
-          Criar conta
+        <Link to="/carrinhoDecompras" onClick={() => setIsMenuOpen(false)}>
+          <Icon svg={CartCompras} />
         </Link>
       </nav>
-
       <button
         className="md:hidden z-50"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         aria-label="Abrir menu"
       >
-        {isMenuOpen ? <HiOutlineX size={30} /> : <HiOutlineMenuAlt3 size={30} />}
+        {isMenuOpen ? (
+          <HiOutlineX size={30} />
+        ) : (
+          <HiOutlineMenuAlt3 size={30} />
+        )}
       </button>
     </header>
   );
