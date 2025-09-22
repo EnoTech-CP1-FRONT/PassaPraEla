@@ -14,6 +14,22 @@ export const TeamProvider = ({ children }) => {
   });
 
   const escalarJogadora = (posicao, jogadora) => {
+    // **NOVA LÓGICA DE VERIFICAÇÃO**
+    // 1. Pega todos os jogadores já escalados no time.
+    const jogadoresAtuais = Object.values(team);
+
+    // 2. Verifica se a jogadora que está sendo escalada (pelo ID) já existe na lista.
+    const jaEscalada = jogadoresAtuais.some(
+      (p) => p && p.id === jogadora.id
+    );
+
+    // 3. Se ela já foi escalada, mostra um alerta e interrompe a função.
+    if (jaEscalada) {
+      alert(`${jogadora.nome} já está na sua equipe e não pode ser selecionada novamente.`);
+      return; // Impede a atualização do estado
+    }
+
+    // 4. Se não estiver escalada, atualiza o time normalmente.
     setTeam((prev) => ({ ...prev, [posicao]: jogadora }));
   };
 
