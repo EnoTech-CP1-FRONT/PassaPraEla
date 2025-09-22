@@ -1,8 +1,10 @@
 import { useState } from "react";
 import InputText from "../common/InputText";
 import { useNavigate } from "react-router-dom";
+import { useTeam } from "../../context/useTeam"; // Importa o hook do contexto
 
-export default function FormRegistro({ children, adress }) {
+export default function FormRegistro({ adress }) {
+  const { setTeamName } = useTeam(); // Pega a função para definir o nome do time
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,6 +12,7 @@ export default function FormRegistro({ children, adress }) {
     data: "",
     cpf: "",
     senha: "",
+    nomeDaEquipe: "", // Adiciona o nome da equipe ao estado do formulário
   });
   const navigate = useNavigate();
 
@@ -25,6 +28,12 @@ export default function FormRegistro({ children, adress }) {
   // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault(); // Impede o recarregamento da página
+
+    // Salva o nome do time no contexto global
+    if (formData.nomeDaEquipe.trim()) {
+      setTeamName(formData.nomeDaEquipe);
+    }
+
     try {
       const response = await fetch("http://localhost:3001/cadastrar", {
         method: "POST",
@@ -105,7 +114,19 @@ export default function FormRegistro({ children, adress }) {
           Senha
         </InputText>
       </div>
-      {children}
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-4">DADOS DO TIME</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <InputText
+            id="nomeDaEquipe"
+            value={formData.nomeDaEquipe}
+            onChange={handleChange}
+            className="registro"
+          >
+            Qual será o nome da sua equipe?
+          </InputText>
+        </div>
+      </div>
       <div className="flex justify-center items-center">
         <button
           type="submit"

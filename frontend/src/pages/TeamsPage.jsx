@@ -85,7 +85,8 @@ function TeamsPage() {
                     {team[pos.key]?.nome || "Vazio"}
                   </span>
                   <span className="font-bold text-green-400">
-                    {team[pos.key] ? "10.00" : "0.00"}
+                    {/* **MUDANÇA**: Exibe a pontuação real da jogadora */}
+                    {team[pos.key]?.pontuacao.toFixed(2) || "0.00"}
                   </span>
                 </li>
               ))}
@@ -94,11 +95,13 @@ function TeamsPage() {
               <div className="flex justify-between text-lg font-bold">
                 <span>PONTOS:</span>
                 <span>
-                  {positions.reduce(
-                    (acc, pos) => acc + (team[pos.key] ? 10 : 0),
-                    0
-                  )}
-                  .00
+                  {positions
+                    .reduce(
+                      // **MUDANÇA**: Soma a pontuação real de cada jogadora escalada
+                      (acc, pos) => acc + (team[pos.key]?.pontuacao || 0),
+                      0
+                    )
+                    .toFixed(2)}
                 </span>
               </div>
             </div>

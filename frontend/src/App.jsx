@@ -10,6 +10,7 @@ import TeamsPage from "./pages/TeamsPage";
 import MarketPage from "./pages/MarketPage";
 import { TeamProvider } from "./context/TeamContext"; // Já existente
 import { CartProvider } from "./context/CartContext"; // Nosso novo provider
+import AdminDashboard from "./pages/AdiminDashboard";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/cadastrese" element={<Cadastrese />} />
+            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/forms" element={<FormsPage />} />
             <Route path="/regras" element={<RegrasPage />} />
             <Route path="/forms-game" element={<FormsPageGame />} />
