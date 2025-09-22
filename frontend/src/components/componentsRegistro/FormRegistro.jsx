@@ -3,7 +3,7 @@ import InputText from "../common/InputText";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/useTeam"; // Importa o hook do contexto
 
-export default function FormRegistro({ adress }) {
+export default function FormRegistro({ children, adress }) {
   const { setTeamName } = useTeam(); // Pega a função para definir o nome do time
   const [formData, setFormData] = useState({
     name: "",
@@ -43,6 +43,7 @@ export default function FormRegistro({ adress }) {
         body: JSON.stringify({
           email: formData.email,
           senha: formData.senha,
+          nomeDaEquipe: formData.nomeDaEquipe, // Envia o nome do time para o backend
         }),
       });
 
@@ -127,6 +128,9 @@ export default function FormRegistro({ adress }) {
           </InputText>
         </div>
       </div>
+      
+      {children}
+
       <div className="flex justify-center items-center">
         <button
           type="submit"

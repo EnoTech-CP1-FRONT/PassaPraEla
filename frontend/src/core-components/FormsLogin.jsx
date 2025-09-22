@@ -3,12 +3,14 @@ import ButtonForms from "../components/common/ButtonForms";
 import InputChecked from "../components/common/InputChecked";
 import InputText from "../components/common/InputText";
 import { useNavigate } from "react-router-dom";
+import { useTeam } from "../context/useTeam";
 
 export default function FormsLogin() {
   const [formData, setFormData] = useState({
     email: "",
     senha: "",
   });
+  const { setTeamName } = useTeam(); // Pega a função para definir o nome do time
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
@@ -38,7 +40,12 @@ export default function FormsLogin() {
       const data = await response.json();
       if (response.ok) {
         alert(data.message);
-        navigate("/team");
+        // Se o backend enviou o nome do time, atualiza o contexto
+        if (data.teamName) {
+          setTeamName(data.teamName);
+        }
+        // Navega para a rota que o backend indicou (ou /team como padrão)
+        navigate(data.redirectTo || "/team");
       } else {
         alert(data.message);
       }

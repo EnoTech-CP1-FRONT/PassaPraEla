@@ -2,9 +2,12 @@ import fieldImage from "../assets/campo.jpg";
 import HeaderTeamPage from "../components/componentsTeamsPage/HeaderTeamPage";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../context/useTeam";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
+
 function TeamsPage() {
   const navigate = useNavigate();
-  const { team } = useTeam();
+  const { team, teamName } = useTeam(); // Pega o nome do time do contexto
 
   const positions = [
     { key: "GOL", label: "GOL", top: "85%", left: "50%" },
@@ -17,98 +20,105 @@ function TeamsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 font-sans">
-      <HeaderTeamPage />
+    <>
+      <Header></Header>
+      <div className="min-h-screen bg-gray-900 font-sans">
+        <HeaderTeamPage />
 
-      <main className="max-w-full mx-auto p-8 bg-white">
-        <h2 className="text-4xl font-bold text-purple-400 mb-6">
-          Sua Escalação
-        </h2>
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-          {/* Campo */}
-          <div className="w-full lg:w-2/3 relative">
-            <img
-              src={fieldImage}
-              alt="Campo de futebol"
-              className="w-full h-auto"
-            />
+        <main className="max-w-full mx-auto p-8 bg-white">
+          <h2 className="text-4xl font-bold text-purple-600 mb-2">
+            {teamName} {/* Exibe o nome do time aqui */}
+          </h2>
+          <h3 className="text-2xl font-semibold text-gray-500 mb-6">
+            Sua Escalação
+          </h3>
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            {/* Campo */}
+            <div className="w-full lg:w-2/3 relative">
+              <img
+                src={fieldImage}
+                alt="Campo de futebol"
+                className="w-full h-auto"
+              />
 
-            {positions.map((pos) => {
-              const jogadora = team[pos.key];
-              return (
-                <div
-                  key={pos.key}
-                  className="absolute text-center cursor-pointer"
-                  style={{
-                    top: pos.top,
-                    left: pos.left,
-                    transform: "translate(-50%, -50%)",
-                  }}
-                  onClick={() => navigate(`/marketplace?posicao=${pos.key}`)}
-                >
-                  {jogadora ? (
-                    <>
-                      <img
-                        src={"http://localhost:3001" + jogadora.url_imagem}
-                        alt={jogadora.nome}
-                        className="rounded-full h-16 w-16 object-cover border-2 "
-                      />
-                      <span className="bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">
-                        {pos.label}
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <div className="bg-white rounded-full h-16 w-16 flex items-center justify-center border-2">
-                        <span className="text-4xl text-purple-700">+</span>
-                      </div>
-                      <span className="bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">
-                        {pos.label}
-                      </span>
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+              {positions.map((pos) => {
+                const jogadora = team[pos.key];
+                return (
+                  <div
+                    key={pos.key}
+                    className="absolute text-center cursor-pointer"
+                    style={{
+                      top: pos.top,
+                      left: pos.left,
+                      transform: "translate(-50%, -50%)",
+                    }}
+                    onClick={() => navigate(`/marketplace?posicao=${pos.key}`)}
+                  >
+                    {jogadora ? (
+                      <>
+                        <img
+                          src={"http://localhost:3001" + jogadora.url_imagem}
+                          alt={jogadora.nome}
+                          className="rounded-full h-16 w-16 object-cover border-2 "
+                        />
+                        <span className="bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">
+                          {pos.label}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <div className="bg-white rounded-full h-16 w-16 flex items-center justify-center border-2">
+                          <span className="text-4xl text-purple-700">+</span>
+                        </div>
+                        <span className="bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">
+                          {pos.label}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
 
-          {/* Lista lateral */}
-          <div className="w-full lg:w-1/3 bg-gray-100 p-6 rounded-lg text-black">
-            <ul className="space-y-3 mb-6">
-              {positions.map((pos) => (
-                <li
-                  key={pos.key}
-                  className="flex justify-between items-center text-lg"
-                >
+            {/* Lista lateral */}
+            <div className="w-full lg:w-1/3 bg-gray-100 p-6 rounded-lg text-black">
+              <ul className="space-y-3 mb-6">
+                {positions.map((pos) => (
+                  <li
+                    key={pos.key}
+                    className="flex justify-between items-center text-lg"
+                  >
+                    <span>
+                      <span className="font-bold">{pos.label}</span> -{" "}
+                      {team[pos.key]?.nome || "Vazio"}
+                    </span>
+                    <span className="font-bold text-green-400">
+                      {/* **MUDANÇA**: Exibe a pontuação real da jogadora */}
+                      {team[pos.key]?.pontuacao.toFixed(2) || "0.00"}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t border-gray-600 pt-4 mb-6">
+                <div className="flex justify-between text-lg font-bold">
+                  <span>PONTOS:</span>
                   <span>
-                    <span className="font-bold">{pos.label}</span> -{" "}
-                    {team[pos.key]?.nome || "Vazio"}
+                    {positions
+                      .reduce(
+                        // **MUDANÇA**: Soma a pontuação real de cada jogadora escalada
+                        (acc, pos) => acc + (team[pos.key]?.pontuacao || 0),
+                        0
+                      )
+                      .toFixed(2)}
                   </span>
-                  <span className="font-bold text-green-400">
-                    {/* **MUDANÇA**: Exibe a pontuação real da jogadora */}
-                    {team[pos.key]?.pontuacao.toFixed(2) || "0.00"}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <div className="border-t border-gray-600 pt-4 mb-6">
-              <div className="flex justify-between text-lg font-bold">
-                <span>PONTOS:</span>
-                <span>
-                  {positions
-                    .reduce(
-                      // **MUDANÇA**: Soma a pontuação real de cada jogadora escalada
-                      (acc, pos) => acc + (team[pos.key]?.pontuacao || 0),
-                      0
-                    )
-                    .toFixed(2)}
-                </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+      <Footer />
+    </>
   );
 }
 

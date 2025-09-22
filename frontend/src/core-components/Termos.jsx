@@ -60,7 +60,7 @@ const legalInfo = {
 
 export default function Termos() {
   return (
-    <>
+    <div>
       <div className="mt-8">
         <h2 className="text-2xl font-bold mb-4">{legalInfo.terms.title}</h2>
         <div className="h-48 overflow-y-scroll border p-4 rounded-lg bg-gray-50">
@@ -77,6 +77,6 @@ export default function Termos() {
         </InputChecked>
       </div>
 
-    </>
+    </div>
   );
 }

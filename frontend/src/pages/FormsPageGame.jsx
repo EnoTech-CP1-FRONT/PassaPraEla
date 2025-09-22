@@ -12,9 +12,9 @@ export default function FormsPageGame() {
         
 
 
-        <Termos />
+          <Termos />
 
-      </FormRegistro>
+        </FormRegistro>
     </Container>
   );
 }

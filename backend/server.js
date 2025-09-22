@@ -116,13 +116,11 @@ app.put("/jogadoras/:id/stats", async (req, res) => {
         id,
       ]
     );
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Pontuação atualizada com sucesso!",
-        novaPontuacao: pontuacao,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Pontuação atualizada com sucesso!",
+      novaPontuacao: pontuacao,
+    });
   } catch (error) {
     console.error("Erro ao atualizar estatísticas:", error);
     res.status(500).json({ message: "Erro interno no servidor." });
@@ -141,9 +139,11 @@ app.get("/jogadoras", async (req, res) => {
 
 // **CÓDIGO RESTAURADO** - Endpoint de cadastro de usuário
 app.post("/cadastrar", async (req, res) => {
-  const { email, senha } = req.body;
-  if (!email || !senha) {
-    return res.status(400).json({ message: "Email e senha são obrigatórios." });
+  const { email, senha, nomeDaEquipe } = req.body; // 1. Recebe o nome do time
+  if (!email || !senha || !nomeDaEquipe) {
+    return res
+      .status(400)
+      .json({ message: "Email, senha e nome do time são obrigatórios." });
   }
   try {
     const row = await db.get("SELECT * FROM usuarios WHERE email = ?", [email]);
@@ -154,10 +154,11 @@ app.post("/cadastrar", async (req, res) => {
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(senha, salt);
-    await db.run("INSERT INTO usuarios (email, senha) VALUES (?, ?)", [
-      email,
-      hashedPassword,
-    ]);
+    // 2. Insere o nome do time no banco de dados
+    await db.run(
+      "INSERT INTO usuarios (email, senha, nome_time) VALUES (?, ?, ?)",
+      [email, hashedPassword, nomeDaEquipe]
+    );
     res
       .status(201)
       .json({ success: true, message: "Usuário cadastrado com sucesso!" });
@@ -202,6 +203,7 @@ app.post("/login", async (req, res) => {
       res.status(200).json({
         success: true,
         message: "Login bem-sucedido!",
+        teamName: user.nome_time, // **NOVO**: Envia o nome do time para o frontend
         redirectTo: "/team",
       });
     } else {
@@ -222,7 +224,7 @@ app.post("/login", async (req, res) => {
     });
 
     await db.exec(
-      `CREATE TABLE IF NOT EXISTS usuarios (id INTEGER PRIMARY KEY, email TEXT UNIQUE, senha TEXT)`
+      `CREATE TABLE IF NOT EXISTS usuarios (id INTEGER PRIMARY KEY, email TEXT UNIQUE, senha TEXT, nome_time TEXT)`
     );
     await db.exec(
       `CREATE TABLE IF NOT EXISTS jogadoras (
