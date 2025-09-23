@@ -2,7 +2,7 @@ import fieldImage from "../assets/campo.jpg";
 import HeaderTeamPage from "../components/componentsTeamsPage/HeaderTeamPage";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../context/useTeam";
-import Header from "../components/layout/Header";
+import HeaderUniversal from "../components/layout/HeaderUniversal";
 import Footer from "../components/layout/Footer";
 
 function TeamsPage() {
@@ -21,7 +21,7 @@ function TeamsPage() {
 
   return (
     <>
-      <Header></Header>
+      <HeaderUniversal />
       <div className="min-h-screen bg-gray-900 font-sans">
         <HeaderTeamPage />
 

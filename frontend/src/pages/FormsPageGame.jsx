@@ -7,7 +7,7 @@ export default function FormsPageGame() {
   return (
     <Container className="bg-green-100">
       <SectionRegistro className="bg-green-600" />  
-        <FormRegistro adress='/regras'>
+        <FormRegistro adress='/planos'>
 
         
 
