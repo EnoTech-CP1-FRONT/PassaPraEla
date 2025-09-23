@@ -1,16 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import InputText from "../common/InputText";
+import { useTeam } from "../../context/useTeam"; // Importa o hook do contexto
 import AdicionarJogadoras from "../../core-components/AdicionarJogadoras"; // Importando o componente de jogadoras
 
 export default function FormularioCompleto({ adress }) {
   const navigate = useNavigate();
+  const { setTeamName } = useTeam(); // Pega a função para definir o nome do time
   // Estado para os dados do usuário
-  const [user, setUser] = useState({ email: '', senha: '' });
+  const [user, setUser] = useState({ email: '', senha: '', nomeDaEquipe: '' });
   // Estado para a lista de jogadoras
   const [jogadoras, setJogadoras] = useState([{ nome: '', posicao: '', numero_camisa: '', imagem: null }]);
 
-  const handleUserChange = (e) => {
+  const handleUserChange = (e) => { 
     setUser({ ...user, [e.target.name]: e.target.value });
   }
 
@@ -19,10 +21,15 @@ export default function FormularioCompleto({ adress }) {
     
     try {
       // --- Etapa 1: Cadastrar Usuário ---
+      // Salva o nome do time no contexto global
+      if (user.nomeDaEquipe.trim()) {
+        setTeamName(user.nomeDaEquipe);
+      }
+
       const userResponse = await fetch("http://localhost:3001/cadastrar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: user.email, senha: user.senha }),
+        body: JSON.stringify({ email: user.email, senha: user.senha, nomeDaEquipe: user.nomeDaEquipe }),
       });
       const userData = await userResponse.json();
       if (!userResponse.ok) {
@@ -64,6 +71,7 @@ export default function FormularioCompleto({ adress }) {
         <h2 className="text-2xl font-bold mb-4">DADOS DO RESPONSÁVEL</h2>
         <div className="grid grid-cols-1 md-grid-cols-2 gap-4">
           <InputText name="email" type="email" value={user.email} onChange={handleUserChange} className="registro">Email para Login</InputText>
+          <InputText name="nomeDaEquipe" value={user.nomeDaEquipe} onChange={handleUserChange} className="registro">Nome da Equipe</InputText>
           <InputText name="senha" type="password" value={user.senha} onChange={handleUserChange} className="registro">Senha</InputText>
         </div>
       </div>
