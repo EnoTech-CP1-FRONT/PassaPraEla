@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-function NoticiasFutebolFeminino() {
-  // Usando variável de ambiente para a chave de API (RECOMENDADO)
-  const API_KEY =
-    import.meta.env.VITE_NEWS_API_KEY || "b55ba3c963cc4938a2866fa62cc655ef";
-  const QUERY = "futebol feminino";
+export default function ApiNoticia() {
+  const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
+
+  // --- NOVA ESTRATÉGIA DE BUSCA ---
+  // Em vez de um termo genérico, buscamos por campeonatos e ligas femininas famosas.
+  // Isso garante resultados muito mais relevantes.
+  const QUERY = '"Brasileirão Feminino" OR "NWSL" OR "Liga F" OR "FA WSL" OR "Champions League Feminina"';
+  
   const LANGUAGE = "pt";
-  // Adicionado o parâmetro pageSize=6 para limitar os resultados
-  const API_URL = `https://newsapi.org/v2/everything?q=${QUERY}&language=${LANGUAGE}&sortBy=publishedAt&pageSize=6&apiKey=${API_KEY}`;
+  const CATEGORY = "sports";
+  // A URL agora usa a nova query
+  const API_URL = `https://gnews.io/api/v4/search?q=${encodeURIComponent(
+    QUERY
+  )}&lang=${LANGUAGE}&category=${CATEGORY}&apikey=${API_KEY}`;
 
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,9 +21,9 @@ function NoticiasFutebolFeminino() {
 
   useEffect(() => {
     const fetchNoticias = async () => {
-      if (!API_KEY || API_KEY === "SUA_CHAVE_DE_API_AQUI") {
+      if (!API_KEY) {
         setError(
-          "Chave de API não configurada. Por favor, adicione sua chave em um arquivo .env"
+          "Chave da GNews API não configurada. Verifique o arquivo .env"
         );
         setLoading(false);
         return;
@@ -27,10 +33,17 @@ function NoticiasFutebolFeminino() {
         const response = await fetch(API_URL);
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(`Erro ${response.status}: ${errorData.message}`);
+          if (errorData.errors) {
+             throw new Error(errorData.errors[0]);
+          }
+          throw new Error(`Erro na rede: ${response.statusText}`);
         }
         const data = await response.json();
-        setArticles(data.articles);
+        
+        // Com a nova query, não precisamos mais do filtro manual.
+        // A própria API nos dará resultados muito melhores.
+        setArticles(data.articles.slice(0, 6));
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -52,7 +65,7 @@ function NoticiasFutebolFeminino() {
   if (error) {
     return (
       <div className="max-w-4xl mx-auto text-center text-lg mt-8 text-red-600 p-4 bg-red-100 rounded-md">
-        <strong>Erro:</strong> {error}
+        <strong>Erro ao buscar notícias:</strong> {error}
       </div>
     );
   }
@@ -68,17 +81,15 @@ function NoticiasFutebolFeminino() {
           Nenhuma notícia foi encontrada.
         </p>
       ) : (
-        // Container do Grid Responsivo
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {articles.map((article) => (
-            // Card da Notícia (agora um <article>)
             <article
               key={article.url}
               className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
-              {article.urlToImage ? (
+              {article.image ? (
                 <img
-                  src={article.urlToImage}
+                  src={article.image}
                   alt={article.title}
                   className="w-full h-48 object-cover"
                 />
@@ -87,8 +98,6 @@ function NoticiasFutebolFeminino() {
                   <span>Imagem não disponível</span>
                 </div>
               )}
-
-              {/* Container do conteúdo para alinhar o link no final */}
               <div className="p-4 flex flex-col flex-1">
                 <h2 className="text-lg font-bold text-gray-900">
                   {article.title}
@@ -112,5 +121,3 @@ function NoticiasFutebolFeminino() {
     </div>
   );
 }
-
-export default NoticiasFutebolFeminino;
