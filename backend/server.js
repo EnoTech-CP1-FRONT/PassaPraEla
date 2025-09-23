@@ -7,9 +7,15 @@ import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Configuração de diretórios para ES Modules
+// NOVO: Import do Mercado Pago
+import { MercadoPagoConfig, Preference } from 'mercadopago';
+import dotenv from 'dotenv';
+
+// Configuração de diretórios e dotenv
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+dotenv.config();
+
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -34,6 +40,49 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+
+// Endpoint de pagamento CORRIGIDO
+app.post("/create_preference", async (req, res) => {
+    const { cartItems } = req.body;
+  
+    try {
+      // 1. Crie um cliente com suas credenciais
+      const client = new MercadoPagoConfig({ 
+        accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN 
+      });
+  
+      // 2. Crie a preferência usando o cliente
+      const preference = new Preference(client);
+  
+      const items = cartItems.map(item => ({
+        title: item.nome,
+        unit_price: Number(parseFloat(item.preco.replace("R$ ", "").replace(",", "."))),
+        quantity: item.quantity,
+        currency_id: "BRL"
+      }));
+  
+      const result = await preference.create({
+        body: {
+          items: items,
+          back_urls: {
+            success: "https://passa-pra-ela-oficial.vercel.app/loja", // Altere para a URL do seu site em produção
+            failure: "https://passa-pra-ela-oficial.vercel.app/carrinhoDecompras",
+          },
+          auto_return: "approved",
+        }
+      });
+      
+      res.status(201).json({
+        id: result.id,
+      });
+  
+    } catch (error) {
+      console.error("Erro ao criar preferência:", error);
+      res.status(500).json({ message: "Erro interno no servidor ao criar preferência." });
+    }
+});
+
 
 // --- Endpoints ---
 

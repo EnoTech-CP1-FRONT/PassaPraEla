@@ -1,24 +1,61 @@
-
 import { useCart } from "../context/CartContext";
 import HeaderLoja from "../components/layout/HeaderLoja";
 import Footer from "../components/layout/Footer";
 import { Link } from "react-router-dom";
+import { useState } from "react"; // Importe o useState
+
+// Imports do Mercado Pago
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+
+// Cole sua Public Key de TESTE aqui. 
+// Lembre-se que esta chave é segura para ser exposta no frontend.
+initMercadoPago('Chave', {
+    locale: "pt-BR",
+});
 
 export default function CarrinhoDeCompras() {
-  // Usando o hook para acessar os itens e funções do carrinho
+  // --- SEUS HOOKS E CÁLCULOS EXISTENTES (NENHUMA MUDANÇA AQUI) ---
   const { cartItems, addToCart, removeFromCart } = useCart();
-
-  // Função para calcular o total de itens no carrinho
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
-  // Função para calcular o preço total
   const totalPrice = cartItems
     .reduce((sum, item) => {
-      // Remove 'R$ ' e substitui ',' por '.' para converter para número
       const price = parseFloat(item.preco.replace("R$ ", "").replace(",", "."));
       return sum + price * item.quantity;
     }, 0)
-    .toFixed(2); // Formata para 2 casas decimais
+    .toFixed(2);
+
+  // --- NOVA LÓGICA PARA PAGAMENTO ---
+  // 1. Estado para guardar o ID da preferência de pagamento
+  const [preferenceId, setPreferenceId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // 2. Função que chama seu backend para criar a preferência
+  const handleCheckout = async () => {
+    setIsLoading(true); // Ativa o estado de carregamento
+    try {
+      const response = await fetch("http://localhost:3001/create_preference", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cartItems }), // O backend já recalcula o preço, então só precisamos dos itens
+      });
+
+      const data = await response.json();
+
+      if (data.id) {
+        setPreferenceId(data.id); // Guarda o ID recebido no estado
+      } else {
+        alert("Não foi possível gerar o link de pagamento.");
+      }
+    } catch (error) {
+      console.error("Erro ao finalizar a compra:", error);
+      alert("Não foi possível iniciar o checkout. Verifique o console para mais detalhes.");
+    } finally {
+        setIsLoading(false); // Desativa o estado de carregamento
+    }
+  };
+
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -42,7 +79,7 @@ export default function CarrinhoDeCompras() {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Lista de Itens */}
+            {/* Lista de Itens (SEU CÓDIGO ORIGINAL) */}
             <div className="lg:col-span-2 space-y-4">
               {cartItems.map((item) => (
                 <div
@@ -83,7 +120,7 @@ export default function CarrinhoDeCompras() {
               ))}
             </div>
 
-            {/* Resumo do Pedido */}
+            {/* Resumo do Pedido (COM A NOVA LÓGICA DE BOTÃO) */}
             <div className="bg-white p-6 rounded-lg shadow-md h-fit">
               <h2 className="text-2xl font-bold mb-4 border-b pb-2">
                 Resumo do Pedido
@@ -100,9 +137,22 @@ export default function CarrinhoDeCompras() {
                 <span>Total</span>
                 <span>R$ {totalPrice.replace(".", ",")}</span>
               </div>
-              <button className="w-full mt-6 bg-green-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition-colors">
-                Finalizar Compra
-              </button>
+              
+              {/* --- 3. Lógica condicional para o botão de pagamento --- */}
+              <div id="wallet_container" className="w-full mt-6">
+                {!preferenceId ? (
+                  <button 
+                    onClick={handleCheckout} 
+                    disabled={isLoading}
+                    className="w-full bg-green-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition-colors disabled:bg-gray-400"
+                  >
+                    {isLoading ? "Carregando..." : "Finalizar Compra"}
+                  </button>
+                ) : (
+                  <Wallet initialization={{ preferenceId: preferenceId }} />
+                )}
+              </div>
+
             </div>
           </div>
         )}
