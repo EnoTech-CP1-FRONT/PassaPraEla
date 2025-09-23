@@ -26,6 +26,7 @@ const CardJogadora = ({ jogadora, posicao, jaSelecionada }) => {
         <div>
           <h3 className="text-xl font-bold text-gray-800">{jogadora.nome}</h3>
           <p className="text-gray-500">{jogadora.posicao}</p>
+          <p className="text-sm text-purple-700 font-semibold">{jogadora.nome_time}</p>
         </div>
       </div>
       <div className="w-48 flex justify-end">

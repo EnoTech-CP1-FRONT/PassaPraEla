@@ -39,13 +39,14 @@ const upload = multer({ storage: storage });
 
 // Endpoint para cadastrar jogadoras
 app.post("/jogadoras", upload.array("imagens", 15), async (req, res) => {
-  const { nome, posicao, numero_camisa } = req.body;
+  const { nome, posicao, numero_camisa, nome_time } = req.body; // 1. Recebe o nome do time
   const files = req.files;
   const nomes = Array.isArray(nome) ? nome : [nome];
   const posicoes = Array.isArray(posicao) ? posicao : [posicao];
   const numeros = Array.isArray(numero_camisa)
     ? numero_camisa
     : [numero_camisa];
+  const nomesTimes = Array.isArray(nome_time) ? nome_time : [nome_time]; // Garante que seja um array
 
   if (!files || files.length !== nomes.length) {
     return res.status(400).json({ message: "Dados de jogadoras incompletos." });
@@ -56,8 +57,8 @@ app.post("/jogadoras", upload.array("imagens", 15), async (req, res) => {
     for (let i = 0; i < nomes.length; i++) {
       const url_imagem = `/images/players/${files[i].filename}`;
       await db.run(
-        "INSERT INTO jogadoras (nome, numero_camisa, posicao, url_imagem) VALUES (?, ?, ?, ?)",
-        [nomes[i], numeros[i], posicoes[i], url_imagem]
+        "INSERT INTO jogadoras (nome, numero_camisa, posicao, url_imagem, nome_time) VALUES (?, ?, ?, ?, ?)", // 2. Adiciona nome_time no INSERT
+        [nomes[i], numeros[i], posicoes[i], url_imagem, nomesTimes[i]] // 3. Passa o nome do time para o banco
       );
     }
     await db.exec("COMMIT");
@@ -233,6 +234,7 @@ app.post("/login", async (req, res) => {
         numero_camisa INTEGER, 
         posicao TEXT, 
         url_imagem TEXT,
+        nome_time TEXT,
         gols INTEGER DEFAULT 0,
         assistencias INTEGER DEFAULT 0,
         finalizacoes INTEGER DEFAULT 0,

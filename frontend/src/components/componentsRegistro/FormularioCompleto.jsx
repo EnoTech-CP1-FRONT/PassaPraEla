@@ -44,6 +44,7 @@ export default function FormularioCompleto({ adress }) {
         formData.append('nome', jogadora.nome);
         formData.append('posicao', jogadora.posicao);
         formData.append('numero_camisa', jogadora.numero_camisa);
+        formData.append('nome_time', user.nomeDaEquipe); // Adiciona o nome do time para cada jogadora
         formData.append('imagens', jogadora.imagem); // **IMPORTANTE**: O 'name' é 'imagens'
       });
       
