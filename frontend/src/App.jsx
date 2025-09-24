@@ -12,6 +12,7 @@ import { TeamProvider } from "./context/TeamContext"; // Já existente
 import { CartProvider } from "./context/CartContext"; // Nosso novo provider
 import AdminDashboard from "./pages/AdiminDashboard";
 import Planos from "./pages/Planos";
+import RankingPage from "./pages/RankingPage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/marketplace" element={<MarketPage />} />
             <Route path="/team" element={<TeamsPage />} />{" "}
             <Route path="/market" element={<MarketPage />} />
+            <Route path="/ranking" element={<RankingPage />} />
           </Routes>
         </TeamProvider>
       </CartProvider>

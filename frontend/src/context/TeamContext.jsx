@@ -1,44 +1,61 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 export const TeamContext = createContext();
 
 export const TeamProvider = ({ children }) => {
-  const [teamName, setTeamName] = useState("Meu Time"); // Estado para o nome do time
+  const [teamName, setTeamName] = useState("Meu Time");
   const [team, setTeam] = useState({
-    GOL: null,
-    DEF1: null,
-    DEF2: null,
-    MEI1: null,
-    MEI2: null,
-    ATA1: null,
-    ATA2: null,
+    GOL: null, DEF1: null, DEF2: null,
+    MEI1: null, MEI2: null, ATA1: null, ATA2: null,
   });
 
-  const escalarJogadora = (posicao, jogadora) => {
-    // **NOVA LÓGICA DE VERIFICAÇÃO**
-    // 1. Pega todos os jogadores já escalados no time.
-    const jogadoresAtuais = Object.values(team);
+  // Salva a escalação no backend
+  const saveTeamToBackend = async (currentTeam) => {
+    const userEmail = localStorage.getItem('userEmail'); 
+    if (!userEmail) return;
 
-    // 2. Verifica se a jogadora que está sendo escalada (pelo ID) já existe na lista.
+    try {
+      await fetch("http://localhost:3001/escalacao", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: userEmail, team: currentTeam }),
+      });
+    } catch (error) {
+      console.error("Falha ao salvar escalação:", error);
+    }
+  };
+  
+  const escalarJogadora = (posicao, jogadora) => {
+    const jogadoresAtuais = Object.values(team);
     const jaEscalada = jogadoresAtuais.some((p) => p && p.id === jogadora.id);
 
-    // 3. Se ela já foi escalada, mostra um alerta e interrompe a função.
     if (jaEscalada) {
-      alert(
-        `${jogadora.nome} já está na sua equipe e não pode ser selecionada novamente.`
-      );
-      return; // Impede a atualização do estado
+      alert(`${jogadora.nome} já está na sua equipe.`);
+      return;
     }
 
-    // 4. Se não estiver escalada, atualiza o time normalmente.
-    setTeam((prev) => ({ ...prev, [posicao]: jogadora }));
+    const newTeam = { ...team, [posicao]: jogadora };
+    setTeam(newTeam);
+    saveTeamToBackend(newTeam);
+  };
+  
+  // Limpa a escalação
+  const clearTeam = () => {
+      const emptyTeam = {
+          GOL: null, DEF1: null, DEF2: null,
+          MEI1: null, MEI2: null, ATA1: null, ATA2: null,
+      };
+      setTeam(emptyTeam);
+      saveTeamToBackend(emptyTeam);
   };
 
   return (
     <TeamContext.Provider
-      value={{ team, teamName, setTeamName, escalarJogadora }}
+      value={{ team, teamName, setTeamName, escalarJogadora, clearTeam }}
     >
       {children}
     </TeamContext.Provider>
   );
 };
+
+export const useTeam = () => useContext(TeamContext);

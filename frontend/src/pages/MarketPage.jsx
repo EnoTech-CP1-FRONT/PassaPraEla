@@ -2,19 +2,27 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTeam } from "../context/useTeam";
 
-// **NOVO**: O CardJogadora agora recebe a informação se a jogadora já foi selecionada
-const CardJogadora = ({ jogadora, posicao, jaSelecionada }) => {
+// O CardJogadora agora recebe a informação se o mercado está fechado
+const CardJogadora = ({ jogadora, posicao, jaSelecionada, mercadoFechado }) => {
   const { escalarJogadora } = useTeam();
   const navigate = useNavigate();
 
   const handleEscalar = () => {
-    if (jaSelecionada) return; // Não faz nada se o botão estiver desabilitado
+    // Não faz nada se o botão estiver desabilitado
+    if (jaSelecionada || mercadoFechado) return;
+    
     escalarJogadora(posicao, jogadora);
     navigate("/teams");
   };
 
+  const isButtonDisabled = jaSelecionada || mercadoFechado;
+  let buttonText = "Escalar";
+  if (jaSelecionada) buttonText = "Já Escalada";
+  if (mercadoFechado) buttonText = "Mercado Fechado";
+
+
   return (
-    <article className={`bg-white rounded-xl shadow-md p-3 flex items-center justify-between space-x-4 ${jaSelecionada ? 'opacity-50' : ''}`}>
+    <article className={`bg-white rounded-xl shadow-md p-3 flex items-center justify-between space-x-4 ${isButtonDisabled ? 'opacity-60' : ''}`}>
       <div className="flex items-center space-x-4 flex-1">
         <div className="flex-shrink-0">
           <img
@@ -32,15 +40,14 @@ const CardJogadora = ({ jogadora, posicao, jaSelecionada }) => {
       <div className="w-48 flex justify-end">
         <button
           onClick={handleEscalar}
-          // **MUDANÇA VISUAL**: O botão muda de cor e fica desabilitado se a jogadora já foi selecionada
           className={`font-bold py-2 px-6 rounded-lg transition-colors duration-300 ${
-            jaSelecionada
+            isButtonDisabled
               ? 'bg-gray-400 text-gray-800 cursor-not-allowed'
               : 'bg-purple-600 hover:bg-purple-700 text-white'
           }`}
-          disabled={jaSelecionada}
+          disabled={isButtonDisabled}
         >
-          {jaSelecionada ? 'Já Escalada' : 'Escalar'}
+          {buttonText}
         </button>
       </div>
     </article>
@@ -51,30 +58,40 @@ const PaginaSelecaoJogadoras = () => {
   const [params] = useSearchParams();
   const posicaoQuery = params.get("posicao");
   
-  // **NOVO**: Pega o time atual do contexto
   const { team } = useTeam(); 
 
   const [jogadoras, setJogadoras] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // NOVO: Estado para o status do mercado
+  const [mercadoAberto, setMercadoAberto] = useState(true);
 
   useEffect(() => {
-    // ... (seu código de fetchJogadoras permanece o mesmo)
-    const fetchJogadoras = async () => {
+    const fetchData = async () => {
         try {
-          const response = await fetch("http://localhost:3001/jogadoras");
-          if (!response.ok) {
-            throw new Error("Não foi possível buscar os dados das jogadoras.");
-          }
-          const data = await response.json();
-          setJogadoras(data);
+          // Busca jogadoras e status do mercado em paralelo
+          const [jogadorasRes, mercadoRes] = await Promise.all([
+              fetch("http://localhost:3001/jogadoras"),
+              fetch("http://localhost:3001/mercado/status")
+          ]);
+
+          if (!jogadorasRes.ok) throw new Error("Não foi possível buscar os dados das jogadoras.");
+          if (!mercadoRes.ok) throw new Error("Não foi possível verificar o status do mercado.");
+
+          const jogadorasData = await jogadorasRes.json();
+          const mercadoData = await mercadoRes.json();
+          
+          setJogadoras(jogadorasData);
+          setMercadoAberto(mercadoData.status === 'aberto');
+
         } catch (err) {
           setError(err.message);
         } finally {
           setLoading(false);
         }
       };
-      fetchJogadoras();
+      fetchData();
   }, []);
 
   const mapeamentoPosicao = {
@@ -85,7 +102,6 @@ const PaginaSelecaoJogadoras = () => {
 
   const jogadorasFiltradas = jogadoras.filter(j => j.posicao === nomePosicaoFiltro);
   
-  // **NOVO**: Cria uma lista de IDs das jogadoras já selecionadas para fácil verificação
   const idsJogadorasSelecionadas = new Set(Object.values(team).filter(p => p).map(p => p.id));
 
   if (loading) return <div className="text-center p-8">Carregando...</div>;
@@ -101,8 +117,8 @@ const PaginaSelecaoJogadoras = () => {
               key={jogadora.id}
               jogadora={jogadora}
               posicao={posicaoQuery}
-              // **NOVO**: Passa a informação para o card
               jaSelecionada={idsJogadorasSelecionadas.has(jogadora.id)}
+              mercadoFechado={!mercadoAberto} // Passa a informação para o card
             />
           ))
         ) : (

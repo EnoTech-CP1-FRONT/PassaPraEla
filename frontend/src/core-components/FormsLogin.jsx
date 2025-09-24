@@ -10,9 +10,8 @@ export default function FormsLogin() {
     email: "",
     senha: "",
   });
-  const { setTeamName } = useTeam(); // Pega a função para definir o nome do time
+  const { setTeamName } = useTeam();
   const [rememberMe, setRememberMe] = useState(false);
-
   const navigate = useNavigate();
 
   const handleChange = (id, value) => {
@@ -31,20 +30,19 @@ export default function FormsLogin() {
     try {
       const response = await fetch("http://localhost:3001/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       const data = await response.json();
       if (response.ok) {
         alert(data.message);
-        // Se o backend enviou o nome do time, atualiza o contexto
+        // Salva o email do usuário no localStorage
+        localStorage.setItem('userEmail', formData.email);
+
         if (data.teamName) {
           setTeamName(data.teamName);
         }
-        // Navega para a rota que o backend indicou (ou /team como padrão)
         navigate(data.redirectTo || "/team");
       } else {
         alert(data.message);
@@ -57,20 +55,10 @@ export default function FormsLogin() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <InputText
-        id="email"
-        type="email"
-        value={formData.email}
-        onChange={(e) => handleChange("email", e.target.value)}
-      >
+      <InputText id="email" type="email" value={formData.email} onChange={(e) => handleChange("email", e.target.value)}>
         Email
       </InputText>
-      <InputText
-        id="senha"
-        type="password"
-        value={formData.senha}
-        onChange={(e) => handleChange("senha", e.target.value)}
-      >
+      <InputText id="senha" type="password" value={formData.senha} onChange={(e) => handleChange("senha", e.target.value)}>
         Senha
       </InputText>
       <InputChecked checked={rememberMe} onChange={handleCheckboxChange}>
