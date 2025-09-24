@@ -7,15 +7,14 @@ import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// NOVO: Import do Mercado Pago
+// Importações para o Mercado Pago e variáveis de ambiente
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 import dotenv from 'dotenv';
 
-// Configuração de diretórios e dotenv
+// Configuração de diretórios
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
-
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -26,7 +25,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-// --- Configuração do Multer (Upload) ---
+// --- Configuração do Multer para Upload de Imagens ---
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "images/players/"));
@@ -42,10 +41,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-// Endpoint de pagamento
+// --- ENDPOINTS PADRÕES (Criação de Preferência, Jogadoras, Cadastro, Login, etc.) ---
+
+// Endpoint de pagamento (Mercado Pago)
 app.post("/create_preference", async (req, res) => {
     const { cartItems } = req.body;
-  
     try {
       const client = new MercadoPagoConfig({ 
         accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN 
@@ -70,17 +70,14 @@ app.post("/create_preference", async (req, res) => {
         }
       });
       
-      res.status(201).json({
-        id: result.id,
-      });
-  
+      res.status(201).json({ id: result.id });
     } catch (error) {
       console.error("Erro ao criar preferência:", error);
       res.status(500).json({ message: "Erro interno no servidor ao criar preferência." });
     }
 });
 
-// Endpoint para cadastrar jogadoras
+// Endpoint para cadastrar novas jogadoras
 app.post("/jogadoras", upload.array("imagens", 15), async (req, res) => {
   const { nome, posicao, numero_camisa, nome_time } = req.body;
   const files = req.files;
@@ -114,13 +111,11 @@ app.post("/jogadoras", upload.array("imagens", 15), async (req, res) => {
   }
 });
 
-// Endpoint para atualizar estatísticas e pontuação
+// Endpoint para atualizar estatísticas e pontuação de uma jogadora
 app.put("/jogadoras/:id/stats", async (req, res) => {
   const { id } = req.params;
   const { gols, assistencias, finalizacoes, desarmes, defesas, gol_sofrido, cartao_amarelo, cartao_vermelho } = req.body;
-
   const pontuacao = gols * 8 + assistencias * 5 + finalizacoes * 1.5 + desarmes * 1 + defesas * 2 - gol_sofrido * 2 - cartao_amarelo * 2 - cartao_vermelho * 5;
-
   try {
     await db.run(
       `UPDATE jogadoras SET gols = ?, assistencias = ?, finalizacoes = ?, desarmes = ?, defesas = ?, gol_sofrido = ?, cartao_amarelo = ?, cartao_vermelho = ?, pontuacao = ? WHERE id = ?`,
@@ -133,7 +128,7 @@ app.put("/jogadoras/:id/stats", async (req, res) => {
   }
 });
 
-// Endpoint para listar jogadoras
+// Endpoint para listar todas as jogadoras
 app.get("/jogadoras", async (req, res) => {
   try {
     const jogadoras = await db.all("SELECT * FROM jogadoras");
@@ -195,10 +190,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-
-// --- LÓGICA DE ESCALAÇÃO, MERCADO E PONTUAÇÃO (ATUALIZADO E CORRIGIDO) ---
-
-// Endpoint para o usuário salvar sua escalação
+// Endpoint para o usuário salvar sua escalação no banco de dados
 app.post("/escalacao", async (req, res) => {
     const { email, team } = req.body;
     if (!email || !team) {
@@ -214,48 +206,82 @@ app.post("/escalacao", async (req, res) => {
     }
 });
 
-// Endpoint para controlar o mercado
+
+// ===================================================================================
+// ===== NOVA LÓGICA DE MERCADO, PONTUAÇÃO E RANKING (INÍCIO) =======================
+// ===================================================================================
+
 app.post('/mercado/status', async (req, res) => {
     const { status } = req.body;
     if (status !== 'aberto' && status !== 'fechado') {
         return res.status(400).json({ message: 'Status inválido.' });
     }
+
     try {
+        // Inicia uma transação para garantir que todas as operações sejam bem-sucedidas ou nenhuma seja.
         await db.exec('BEGIN TRANSACTION');
 
         if (status === 'fechado') {
-            await db.run('UPDATE mercado_status SET status = "fechado" WHERE id = 1');
-            const usuarios = await db.all('SELECT id, escalacao_atual FROM usuarios WHERE escalacao_atual IS NOT NULL');
+            // ============================================================
+            // ===== LÓGICA PARA FECHAR O MERCADO =========================
+            // ============================================================
+            // Quando o mercado fecha, a única ação é MUDAR O STATUS.
+            // Isso "fotografa" a escalação de todos os usuários, impedindo que eles a alterem.
+            // A pontuação das jogadoras PODE SER ATUALIZADA pelo admin enquanto o mercado está fechado.
             
+            await db.run('UPDATE mercado_status SET status = "fechado" WHERE id = 1');
+            
+            // Confirma a transação, pois a única operação foi concluída com sucesso.
+            await db.exec('COMMIT');
+            res.status(200).json({ message: "Mercado fechado! As escalações estão travadas. Agora você pode atualizar a pontuação das jogadoras." });
+
+        } else { // status === 'aberto'
+            // ============================================================
+            // ===== LÓGICA PARA ABRIR O MERCADO (APURAÇÃO) ===============
+            // ============================================================
+            // Esta é a ação mais complexa. Ela executa toda a apuração da rodada anterior antes de preparar para a próxima.
+            
+            // 1. Calcular a pontuação da rodada para cada usuário e somar ao seu total.
+            const usuarios = await db.all('SELECT id, escalacao_atual FROM usuarios WHERE escalacao_atual IS NOT NULL');
             for (const usuario of usuarios) {
                 const escalacao = JSON.parse(usuario.escalacao_atual);
                 const idsJogadoras = Object.values(escalacao).filter(j => j).map(j => j.id);
 
-                if (idsJogadoras.length === 0) continue;
+                if (idsJogadoras.length === 0) continue; // Pula se o usuário não escalou ninguém
 
+                // Busca a soma dos pontos APENAS das jogadoras que o usuário escalou
                 const placeholders = idsJogadoras.map(() => '?').join(',');
                 const { total_pontos_rodada } = await db.get(`SELECT SUM(pontuacao) as total_pontos_rodada FROM jogadoras WHERE id IN (${placeholders})`, idsJogadoras);
 
+                // Adiciona os pontos da rodada ao placar geral do usuário
                 if (total_pontos_rodada) {
                      await db.run('UPDATE usuarios SET pontuacao_total = pontuacao_total + ? WHERE id = ?', [total_pontos_rodada, usuario.id]);
                 }
             }
+            
+            // 2. ZERAR a pontuação de TODAS as jogadoras para a próxima rodada.
+            await db.run('UPDATE jogadoras SET gols = 0, assistencias = 0, finalizacoes = 0, desarmes = 0, defesas = 0, gol_sofrido = 0, cartao_amarelo = 0, cartao_vermelho = 0, pontuacao = 0');
+            
+            // 3. LIMPAR a escalação de TODOS os usuários, forçando-os a escalar novamente.
+            await db.run('UPDATE usuarios SET escalacao_atual = NULL');
+            
+            // 4. Mudar o status para "aberto" no banco de dados.
+            await db.run('UPDATE mercado_status SET status = "aberto" WHERE id = 1');
+            
+            // Confirma todas as operações da transação.
             await db.exec('COMMIT');
-            res.status(200).json({ message: "Mercado fechado e pontos calculados com sucesso!" });
-
-        } else { // status === 'aberto'
-             await db.run('UPDATE mercado_status SET status = "aberto" WHERE id = 1');
-             await db.run('UPDATE jogadoras SET gols = 0, assistencias = 0, finalizacoes = 0, desarmes = 0, defesas = 0, gol_sofrido = 0, cartao_amarelo = 0, cartao_vermelho = 0, pontuacao = 0');
-             await db.run('UPDATE usuarios SET escalacao_atual = NULL');
-             await db.exec('COMMIT');
-             res.status(200).json({ message: "Mercado aberto! Pontuações e escalações zeradas para a nova rodada." });
+            res.status(200).json({ message: "Ranking atualizado! Mercado aberto para a nova rodada." });
         }
     } catch (error) {
+        // Se qualquer erro ocorrer em qualquer uma das etapas acima, a transação inteira é revertida.
         await db.exec('ROLLBACK');
         console.error("Erro ao processar o mercado (transação revertida):", error);
         res.status(500).json({ message: 'Erro interno no servidor. Nenhuma alteração foi salva.' });
     }
 });
+// ===================================================================================
+// ===== NOVA LÓGICA DE MERCADO, PONTUAÇÃO E RANKING (FIM) ===========================
+// ===================================================================================
 
 // Endpoint para buscar status do mercado
 app.get('/mercado/status', async (req, res) => {
@@ -277,7 +303,7 @@ app.get('/ranking', async (req, res) => {
     }
 });
 
-// --- Inicialização do Servidor e DB ---
+// --- Inicialização do Servidor e Banco de Dados ---
 (async () => {
   try {
     db = await open({
