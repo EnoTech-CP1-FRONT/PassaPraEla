@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
+import Swal from "sweetalert2";
 
 // 1. Criar o Contexto
 const CartContext = createContext();
@@ -26,7 +27,15 @@ export const CartProvider = ({ children }) => {
         return [...prevItems, { ...product, quantity: 1 }];
       }
     });
-    alert(`${product.nome} foi adicionado ao carrinho!`);
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: `${product.nome} adicionado!`,
+      showConfirmButton: false,
+      timer: 2500,
+      timerProgressBar: true,
+    });
   };
 
   // Função para remover um produto ou diminuir a quantidade

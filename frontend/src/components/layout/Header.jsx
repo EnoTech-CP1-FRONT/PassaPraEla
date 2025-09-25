@@ -10,7 +10,7 @@ export default function Header() {
     { href: "/sobre", text: "Sobre" },
     { href: "https://diariodofutebolfeminino.com.br/", text: "Destaques" },
     { href: "/loja", text: "Loja" },
-    { href: "/cadastrese", text: "Login" },
+    { href: "/ranking", text: "Ranking" },
   ];
 
   return (
@@ -46,11 +46,11 @@ export default function Header() {
           </Link>
         ))}
         <Link
-          to="/forms-game"
+          to="/cadastrese"
           onClick={() => setIsMenuOpen(false)}
-          className="bg-purple-600 px-6 py-2 rounded-full font-semibold text-lg md:text-[18px] hover:bg-purple-700 transition-colors"
+          className="bg-purple-600 px-6 py-2 rounded-full text-lg md:text-[18px] hover:bg-purple-700 transition-colors"
         >
-          Criar conta
+          <p className="text-2xl">Login</p>
         </Link>
       </nav>
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import InputText from "../common/InputText";
 import { useNavigate } from "react-router-dom";
 import { useTeam } from "../../context/useTeam"; // Importa o hook do contexto
+import Swal from "sweetalert2";
 
 export default function FormRegistro({ children, adress }) {
   const { setTeamName } = useTeam(); // Pega a função para definir o nome do time
@@ -34,6 +35,15 @@ export default function FormRegistro({ children, adress }) {
       setTeamName(formData.nomeDaEquipe);
     }
 
+    Swal.fire({
+      title: "Cadastrando...",
+      text: "Estamos criando sua conta. Por favor, aguarde.",
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
     try {
       const response = await fetch("http://localhost:3001/cadastrar", {
         method: "POST",
@@ -48,14 +58,33 @@ export default function FormRegistro({ children, adress }) {
       });
 
       const data = await response.json();
-      alert(data.message); // Exibe uma mensagem de sucesso ou erro do backend
-      // Navega para a próxima página apenas se a requisição foi bem-sucedida (ex: status 201 Created)
+
       if (response.ok) {
+        Swal.close();
+        await Swal.fire({
+          icon: "success",
+          title: "Cadastro realizado!",
+          text: data.message,
+          confirmButtonColor: "#22C55E",
+        });
         navigate(adress);
+      } else {
+        Swal.close();
+        Swal.fire({
+          icon: "error",
+          title: "Erro no Cadastro",
+          text: data.message,
+          confirmButtonColor: "#8B5CF6",
+        });
       }
     } catch (error) {
       console.error("Erro ao enviar formulário:", error);
-      alert("Falha na comunicação com o servidor.");
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Erro de Conexão",
+        text: "Falha na comunicação com o servidor.",
+      });
     }
   };
 
@@ -128,7 +157,7 @@ export default function FormRegistro({ children, adress }) {
           </InputText>
         </div>
       </div>
-      
+
       {children}
 
       <div className="flex justify-center items-center">

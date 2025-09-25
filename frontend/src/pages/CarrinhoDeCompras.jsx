@@ -3,14 +3,15 @@ import HeaderLoja from "../components/layout/HeaderLoja";
 import Footer from "../components/layout/Footer";
 import { Link } from "react-router-dom";
 import { useState } from "react"; // Importe o useState
+import Swal from "sweetalert2";
 
 // Imports do Mercado Pago
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
-// Cole sua Public Key de TESTE aqui. 
+// Cole sua Public Key de TESTE aqui.
 // Lembre-se que esta chave é segura para ser exposta no frontend.
-initMercadoPago('Chave', {
-    locale: "pt-BR",
+initMercadoPago("Chave", {
+  locale: "pt-BR",
 });
 
 export default function CarrinhoDeCompras() {
@@ -46,16 +47,23 @@ export default function CarrinhoDeCompras() {
       if (data.id) {
         setPreferenceId(data.id); // Guarda o ID recebido no estado
       } else {
-        alert("Não foi possível gerar o link de pagamento.");
+        Swal.fire({
+          icon: "error",
+          title: "Erro ao Gerar Pagamento",
+          text: "Não foi possível gerar o link de pagamento. Tente novamente.",
+        });
       }
     } catch (error) {
       console.error("Erro ao finalizar a compra:", error);
-      alert("Não foi possível iniciar o checkout. Verifique o console para mais detalhes.");
+      Swal.fire({
+        icon: "error",
+        title: "Erro de Conexão",
+        text: "Não foi possível iniciar o checkout. Verifique o console para mais detalhes.",
+      });
     } finally {
-        setIsLoading(false); // Desativa o estado de carregamento
+      setIsLoading(false); // Desativa o estado de carregamento
     }
   };
-
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -137,12 +145,12 @@ export default function CarrinhoDeCompras() {
                 <span>Total</span>
                 <span>R$ {totalPrice.replace(".", ",")}</span>
               </div>
-              
+
               {/* --- 3. Lógica condicional para o botão de pagamento --- */}
               <div id="wallet_container" className="w-full mt-6">
                 {!preferenceId ? (
-                  <button 
-                    onClick={handleCheckout} 
+                  <button
+                    onClick={handleCheckout}
                     disabled={isLoading}
                     className="w-full bg-green-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-green-600 transition-colors disabled:bg-gray-400"
                   >
@@ -152,7 +160,6 @@ export default function CarrinhoDeCompras() {
                   <Wallet initialization={{ preferenceId: preferenceId }} />
                 )}
               </div>
-
             </div>
           </div>
         )}
