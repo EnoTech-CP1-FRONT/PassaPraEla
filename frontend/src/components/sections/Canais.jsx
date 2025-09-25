@@ -1,7 +1,7 @@
 import LogoSpotify from "../../assets/icons/spotify-logo-fill.svg?react";
 import LogoYoutube from "../../assets/icons/youtube-logo-fill.svg?react";
 import Icon from "../common/Icon";
-import ImgPodcast from "../../assets/podcasPassaABola.png";
+import ImgPodcast from "../../assets/podcastPassaAbola.webp";
 import YoutubePassaABola from "../../assets/youtubeTri.png";
 
 export default function Canais() {

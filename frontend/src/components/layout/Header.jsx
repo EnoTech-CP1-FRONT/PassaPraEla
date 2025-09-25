@@ -7,6 +7,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
+    { href: "/sobre", text: "Sobre" },
     { href: "https://diariodofutebolfeminino.com.br/", text: "Destaques" },
     { href: "/loja", text: "Loja" },
     { href: "/cadastrese", text: "Login" },

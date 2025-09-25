@@ -13,6 +13,7 @@ import { CartProvider } from "./context/CartContext"; // Nosso novo provider
 import AdminDashboard from "./pages/AdiminDashboard";
 import Planos from "./pages/Planos";
 import RankingPage from "./pages/RankingPage";
+import Sobre from "./pages/Sobre";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <TeamProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/sobre" element={<Sobre />} />
             <Route path="/cadastrese" element={<Cadastrese />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/forms" element={<FormsPage />} />
@@ -32,7 +34,7 @@ function App() {
             {/* Todas as rotas abaixo têm acesso aos dados do TeamProvider */}
             <Route path="/teams" element={<TeamsPage />} />
             <Route path="/marketplace" element={<MarketPage />} />
-            <Route path="/team" element={<TeamsPage />} />{" "}
+            <Route path="/team" element={<TeamsPage />} />
             <Route path="/market" element={<MarketPage />} />
             <Route path="/ranking" element={<RankingPage />} />
           </Routes>
