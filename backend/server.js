@@ -5,7 +5,10 @@ import bcrypt from "bcrypt";
 import sqlite3 from "sqlite3";
 import multer from "multer";
 import path from "path";
+
 import { fileURLToPath } from "url";
+// Importação NOVO para executar o Python
+import { spawn } from "child_process";
 
 // Importações para o Mercado Pago e variáveis de ambiente
 import { MercadoPagoConfig, Preference } from "mercadopago";
@@ -154,13 +157,11 @@ app.put("/jogadoras/:id/stats", async (req, res) => {
         id,
       ]
     );
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Pontuação atualizada com sucesso!",
-        novaPontuacao: pontuacao,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Pontuação atualizada com sucesso!",
+      novaPontuacao: pontuacao,
+    });
   } catch (error) {
     console.error("Erro ao atualizar estatísticas:", error);
     res.status(500).json({ message: "Erro interno no servidor." });
@@ -218,13 +219,11 @@ app.post("/login", async (req, res) => {
   const ADMIN_SENHA = "adminpassword";
 
   if (email === ADMIN_EMAIL && senha === ADMIN_SENHA) {
-    return res
-      .status(200)
-      .json({
-        success: true,
-        message: "Login de admin bem-sucedido!",
-        redirectTo: "/admin",
-      });
+    return res.status(200).json({
+      success: true,
+      message: "Login de admin bem-sucedido!",
+      redirectTo: "/admin",
+    });
   }
 
   try {
@@ -236,14 +235,12 @@ app.post("/login", async (req, res) => {
     }
     const isMatch = await bcrypt.compare(senha, user.senha);
     if (isMatch) {
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Login bem-sucedido!",
-          teamName: user.nome_time,
-          redirectTo: "/team",
-        });
+      res.status(200).json({
+        success: true,
+        message: "Login bem-sucedido!",
+        teamName: user.nome_time,
+        redirectTo: "/team",
+      });
     } else {
       res.status(401).json({ message: "Senha incorreta." });
     }
@@ -317,11 +314,9 @@ app.post("/mercado/status", async (req, res) => {
       await db.run("UPDATE usuarios SET escalacao_atual = NULL");
       await db.run('UPDATE mercado_status SET status = "aberto" WHERE id = 1');
       await db.exec("COMMIT");
-      res
-        .status(200)
-        .json({
-          message: "Ranking atualizado! Mercado aberto para a nova rodada.",
-        });
+      res.status(200).json({
+        message: "Ranking atualizado! Mercado aberto para a nova rodada.",
+      });
     }
   } catch (error) {
     await db.exec("ROLLBACK");
@@ -370,12 +365,10 @@ app.post("/jogadoras/:id/stats-fisicas", async (req, res) => {
       `UPDATE jogadoras SET passos_total = ?, distancia_km = ? WHERE id = ?`,
       [passos, (distanciaMetros / 1000).toFixed(2), id]
     );
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: `Estatísticas da jogadora ${id} atualizadas.`,
-      });
+    res.status(200).json({
+      success: true,
+      message: `Estatísticas da jogadora ${id} atualizadas.`,
+    });
   } catch (error) {
     console.error("Erro ao atualizar estatísticas físicas:", error);
     res.status(500).json({ message: "Erro interno no servidor." });
@@ -386,8 +379,9 @@ app.post("/jogadoras/:id/stats-fisicas", async (req, res) => {
 app.get("/jogadoras/:id/stats-fisicas", async (req, res) => {
   const { id } = req.params;
   try {
+    // Modificado para incluir a aceleração simulada
     const stats = await db.get(
-      "SELECT nome, passos_total, distancia_km FROM jogadoras WHERE id = ?",
+      "SELECT nome, passos_total, distancia_km, aceleracao_simulada FROM jogadoras WHERE id = ?",
       [id]
     );
     if (stats) {
@@ -397,6 +391,68 @@ app.get("/jogadoras/:id/stats-fisicas", async (req, res) => {
     }
   } catch (error) {
     console.error("Erro ao buscar estatísticas físicas:", error);
+    res.status(500).json({ message: "Erro interno no servidor." });
+  }
+});
+
+// ==============================================================================
+// ===== NOVO ENDPOINT PARA GERAÇÃO DINÂMICA DE GRÁFICOS (PYTHON) =================
+// ==============================================================================
+
+app.get("/math-analytics/graph", async (req, res) => {
+  const { distancia, aceleracao } = req.query;
+  // Garante que temos valores válidos para passar ao Python
+  const distancia_km_iot = parseFloat(distancia) || 0.0;
+  const aceleracao_simulada = parseFloat(aceleracao) || 6.0;
+
+  try {
+    // 1. Executa o script Python
+    const pythonScriptPath = path.join(
+      __dirname,
+      "math-analytics/math_model_simulation.py"
+    );
+
+    // PASSO B: Caminho completo para o Python dentro do .venv (Windows)
+    const venvPythonPath = path.join(__dirname, "math-analytics", ".venv", "Scripts", "python.exe");
+
+    // Usa o caminho completo do VENV para garantir as dependências
+    const python = spawn(venvPythonPath, [
+      pythonScriptPath,
+      distancia_km_iot.toString(),
+      aceleracao_simulada.toString(),
+    ]);
+
+    let dataToSend = "";
+    let errorOutput = "";
+
+    // 2. Captura a saída (Base64)
+    python.stdout.on("data", (data) => {
+      dataToSend += data.toString();
+    });
+
+    // 3. Captura erros (para debug)
+    python.stderr.on("data", (data) => {
+      errorOutput += data.toString();
+    });
+
+    // 4. Envia a resposta quando o Python termina
+    python.on("close", (code) => {
+      if (code !== 0) {
+        console.error(`Python script exited with code ${code}`);
+        console.error(`Python Error: ${errorOutput}`);
+        // Retorna 500 se o script Python falhar
+        return res
+          .status(500)
+          .json({
+            message: "Erro ao gerar gráfico. Verifique logs do Python.",
+          });
+      }
+
+      // O script Python retorna o SVG Base64 na saída padrão
+      res.status(200).json({ imageBase64: dataToSend.trim() });
+    });
+  } catch (error) {
+    console.error("Erro fatal ao spawnar Python:", error);
     res.status(500).json({ message: "Erro interno no servidor." });
   }
 });
@@ -424,6 +480,26 @@ app.get("/jogadoras/:id/stats-fisicas", async (req, res) => {
       await db.run(
         'INSERT INTO mercado_status (id, status) VALUES (1, "aberto")'
       );
+    }
+
+    try {
+      await db.exec(
+        "ALTER TABLE jogadoras ADD COLUMN passos_total INTEGER DEFAULT 0"
+      );
+      await db.exec(
+        "ALTER TABLE jogadoras ADD COLUMN distancia_km REAL DEFAULT 0"
+      );
+      // NOVO: Coluna para a aceleração simulada (baseada na constante do modelo de derivada)
+      await db.exec(
+        "ALTER TABLE jogadoras ADD COLUMN aceleracao_simulada REAL DEFAULT 6.0"
+      );
+      console.log(
+        "✅ Colunas de estatísticas físicas (passos, distância, aceleração) garantidas na tabela."
+      );
+    } catch (e) {
+      if (!e.message.includes("duplicate column name")) {
+        console.error("❌ Erro ao adicionar colunas de estatísticas:", e);
+      }
     }
 
     // Adiciona as colunas para estatísticas físicas se elas ainda não existirem.
