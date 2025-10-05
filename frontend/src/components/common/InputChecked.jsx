@@ -6,7 +6,7 @@ export default function InputChecked({
 }) {
   return (
     <div className={["flex items-center gap-2", className].join(" ")}>
-      <input type={type} id={id} />
+      <input type={type} id={id} required/>
       <label htmlFor={id}>{children}</label>
     </div>
   );
