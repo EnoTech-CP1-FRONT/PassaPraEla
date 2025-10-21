@@ -25,7 +25,7 @@ export default function Header() {
           Passa a Bola
         </span>
       </Link>
-      
+
       <nav
         className={`
           fixed top-0 left-0 w-full h-screen bg-black/90 backdrop-blur-lg
@@ -57,9 +57,13 @@ export default function Header() {
       <button
         className="md:hidden z-50"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label="Abrir menu"
+        aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
       >
-        {isMenuOpen ? <HiOutlineX size={30} /> : <HiOutlineMenuAlt3 size={30} />}
+        {isMenuOpen ? (
+          <HiOutlineX size={30} />
+        ) : (
+          <HiOutlineMenuAlt3 size={30} />
+        )}
       </button>
     </header>
   );

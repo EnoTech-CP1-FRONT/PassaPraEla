@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import HeaderUniversal from "../components/layout/HeaderUniversal";
 import Footer from "../components/layout/Footer";
+
+// Importa o gráfico estático de fallback
+import fallbackGraph from "../assets/fallback-graph.svg";
 import { Link } from "react-router-dom";
 
 // Hardcode as métricas principais do seu modelo Python para exibição
@@ -85,16 +88,21 @@ export default function MathStatsPage() {
         setPlayerStats(data);
       } catch (err) {
         console.error("Erro no fetch de stats:", err);
+        // Garante que a página não quebre se o backend estiver offline.
+        // Os valores padrão (0 ou 6.0) serão usados.
+        setPlayerStats({});
       } finally {
         setLoading(false);
       }
     };
     fetchStats();
-  }, [playerId]);
+  }, [playerId]); // O playerId é 1, então este efeito roda apenas uma vez.
 
-  const accelerationValue = playerStats?.aceleracao_simulada || 6.0;
-  const distanceKm = playerStats?.distancia_km || 0.0;
-  const stepsTotal = playerStats?.passos_total || 0; // --- 2. Efeito para buscar o gráfico DINÂMICO (Executa o Python) ---
+  // Usando '??' (nullish coalescing) para que o valor 0 seja considerado válido.
+  // O valor padrão só é usado se o dado for null ou undefined.
+  const accelerationValue = playerStats?.aceleracao_simulada ?? 6.0;
+  const distanceKm = playerStats?.distancia_km ?? 2.0;
+  const stepsTotal = playerStats?.passos_total ?? 20; // --- 2. Efeito para buscar o gráfico DINÂMICO (Executa o Python) ---
 
   useEffect(() => {
     // Só tenta buscar o gráfico se o primeiro useEffect tiver terminado de carregar
@@ -119,7 +127,11 @@ export default function MathStatsPage() {
         setGraphImage(`data:image/svg+xml;base64,${data.imageBase64}`);
       } catch (err) {
         console.error("Erro ao carregar gráfico:", err);
-        setGraphError(`Erro ao carregar o gráfico: ${err.message}`);
+        // Em vez de mostrar um erro, usamos o gráfico estático de fallback
+        setGraphImage(fallbackGraph);
+        setGraphError(
+          "API offline. Exibindo gráfico de simulação com valores padrão."
+        );
       } finally {
         setGraphLoading(false);
       }
@@ -136,28 +148,6 @@ export default function MathStatsPage() {
     () => ANALISE_MATEMATICA.integral(distanceKm),
     [distanceKm]
   );
-
-  if (graphError) {
-    // Exibe o erro de forma clara na tela
-    return (
-      <div className="p-8 text-center text-red-700 bg-red-100 min-h-screen">
-        <HeaderUniversal />
-        <h1 className="text-4xl font-bold mt-12">Erro Crítico</h1>
-        <p className="mt-4 text-xl">
-          Não foi possível carregar o gráfico de análise.
-        </p>
-        <p className="font-mono text-sm mt-4 p-4 border rounded bg-white max-w-lg mx-auto">
-          {graphError}
-        </p>
-        <p className="mt-6">
-          Por favor, verifique se seu servidor Node.js está rodando e se as
-          dependências Python (numpy, matplotlib) estão instaladas corretamente
-          no seu ambiente virtual (`math-analytics/.venv`).
-        </p>
-        <Footer />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -201,48 +191,42 @@ export default function MathStatsPage() {
               </div>
             )}
           </div>
-          {/* Área de Exibição do Gráfico Dinâmico */}
-          <div className="mb-12">
-            <h3 className="text-3xl font-bold text-gray-800 text-center mb-6">
-              Painel de Análise Completo (Gráfico Matplotlib)
+
+          {/* Seção de Análise Matemática */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <MathCard {...ANALISE_MATEMATICA.exponencial} />
+            <MathCard {...ANALISE_MATEMATICA.logistico} />
+            <MathCard {...derivativeCardProps} />
+            <MathCard {...integralCardProps} />
+          </div>
+
+          {/* Seção do Gráfico Dinâmico */}
+          <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500 hover:shadow-xl transition-shadow mb-12">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              Gráfico de Velocidade e Posição (Modelo de Derivadas/Integrais)
             </h3>
-            {graphLoading ? (
-              <div className="text-center p-12 bg-white rounded-lg shadow-xl">
-                Carregando gráfico dinâmico...
-              </div>
-            ) : graphImage ? (
-              <img
-                // Renderiza a imagem Base64 como SVG
-                src={graphImage}
-                alt="Gráfico de Análise Matemática e Engajamento"
-                className="w-full h-auto bg-white rounded-lg shadow-xl p-4"
-              />
-            ) : (
-              <div className="text-center p-12 bg-white rounded-lg shadow-xl text-red-500">
-                {graphError || "Erro: Gráfico não foi gerado pelo Python."}
+            {graphError && (
+              <div
+                className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4"
+                role="alert"
+              >
+                <p className="font-bold">Aviso</p>
+                <p>{graphError}</p>
               </div>
             )}
-          </div>
-          {/* Explicação dos Modelos */}
-          <div className="space-y-8">
-            <h3 className="text-3xl font-bold text-gray-800 text-center border-b pb-4">
-              A Lógica por Trás da Simulação
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Cards dinâmicos baseados nos dados do sensor */}
-              <MathCard {...derivativeCardProps} />
-              <MathCard {...integralCardProps} />
-              {/* Cards estáticos da simulação de marketing */}
-              <MathCard {...ANALISE_MATEMATICA.exponencial} />
-              <MathCard {...ANALISE_MATEMATICA.logistico} />
-            </div>
-            <div className="pt-8 text-center">
-              <Link to="/" className="inline-block">
-                <button className="bg-gray-800 text-white py-3 px-8 rounded-full text-lg font-semibold hover:bg-gray-700 transition-colors shadow-lg">
-                  Voltar para a Home
-                </button>
-              </Link>
-            </div>
+            {graphLoading ? (
+              <div className="text-center text-blue-600 p-8">
+                Gerando gráfico...
+              </div>
+            ) : (
+              graphImage && (
+                <img
+                  src={graphImage}
+                  alt="Gráfico de Análise Matemática"
+                  className="w-full h-auto mx-auto"
+                />
+              )
+            )}
           </div>
         </div>
       </div>

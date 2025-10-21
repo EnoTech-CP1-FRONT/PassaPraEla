@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="720pt" version="1.1" viewBox="0 0 1008 720" width="1008pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+*{stroke-linecap:butt;stroke-linejoin:round;}
+  </style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 720 
+L 1008 720 
+L 1008 0 
+L 0 0 
+z" style="fill:#ffffff;"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 92.04 648.72 
+L 475.56 648.72 
+L 475.56 390.24 
+L 92.04 390.24 
+z" style="fill:#ffffff;"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 92.04 402.24 
+L 475.56 402.24 
+L 475.56 636.72 
+L 92.04 636.72 
+z" style="fill:none;"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 92.04 402.24 
+L 475.56 402.24 
+L 475.56 636.72 
+L 92.04 636.72 
+z" style="fill:none;stroke:#d9d9d9;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1;"/>
+   </g>
+   <g clip-path="url(#p0e503310f8)">
+    <g id="line2d_1">
+     <path d="M 92.04 630.72 
+Q 283.8 600.72, 475.56 402.24" style="fill:none;stroke:#008000;stroke-width:1.5;"/>
+    </g>
+   </g>
+   <g id="matplotlib.axis_1"/>
+   <g id="matplotlib.axis_2"/>
+   <g id="patch_5">
+    <path d="M 92.04 648.72 
+L 475.56 648.72 
+L 475.56 390.24 
+L 92.04 390.24 
+z" style="fill:none;"/>
+   </g>
+   <g id="text_1">
+    <text style="fill:#000000;font-family:DejaVu Sans;font-size:12pt;stroke:none;" x="156.41125" y="669.763125">1. Modelo Exponencial</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_6">
+    <path d="M 532.44 648.72 
+L 915.96 648.72 
+L 915.96 390.24 
+L 532.44 390.24 
+z" style="fill:#ffffff;"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 532.44 402.24 
+L 915.96 402.24 
+L 915.96 636.72 
+L 532.44 636.72 
+z" style="fill:none;"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 532.44 402.24 
+L 915.96 402.24 
+L 915.96 636.72 
+L 532.44 636.72 
+z" style="fill:none;stroke:#d9d9d9;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1;"/>
+   </g>
+   <g clip-path="url(#p5e3e29f34f)">
+    <g id="line2d_2">
+     <path d="M 532.44 633.72 
+C 650 620, 750 430, 915.96 405.24" style="fill:none;stroke:#800080;stroke-width:1.5;"/>
+    </g>
+   </g>
+   <g id="matplotlib.axis_3"/>
+   <g id="matplotlib.axis_4"/>
+   <g id="patch_9">
+    <path d="M 532.44 648.72 
+L 915.96 648.72 
+L 915.96 390.24 
+L 532.44 390.24 
+z" style="fill:none;"/>
+   </g>
+   <g id="text_2">
+    <text style="fill:#000000;font-family:DejaVu Sans;font-size:12pt;stroke:none;" x="635.0325" y="669.763125">2. Modelo Logístico</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_10">
+    <path d="M 92.04 345.36 
+L 475.56 345.36 
+L 475.56 86.88 
+L 92.04 86.88 
+z" style="fill:#ffffff;"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 92.04 98.88 
+L 475.56 98.88 
+L 475.56 333.36 
+L 92.04 333.36 
+z" style="fill:none;"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 92.04 98.88 
+L 475.56 98.88 
+L 475.56 333.36 
+L 92.04 333.36 
+z" style="fill:none;stroke:#d9d9d9;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1;"/>
+   </g>
+   <g clip-path="url(#p97e37517ea)">
+    <g id="line2d_3">
+     <path d="M 92.04 330.36 
+L 475.56 98.88" style="fill:none;stroke:#1e90ff;stroke-width:1.5;"/>
+    </g>
+   </g>
+   <g id="matplotlib.axis_5"/>
+   <g id="matplotlib.axis_6"/>
+   <g id="patch_13">
+    <path d="M 92.04 345.36 
+L 475.56 345.36 
+L 475.56 86.88 
+L 92.04 86.88 
+z" style="fill:none;"/>
+   </g>
+   <g id="text_3">
+    <text style="fill:#000000;font-family:DejaVu Sans;font-size:12pt;stroke:none;" x="127.35" y="366.403125">3. Velocidade (Derivada)</text>
+   </g>
+  </g>
+  <g id="axes_4">
+   <g id="patch_14">
+    <path d="M 532.44 345.36 
+L 915.96 345.36 
+L 915.96 86.88 
+L 532.44 86.88 
+z" style="fill:#ffffff;"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 532.44 98.88 
+L 915.96 98.88 
+L 915.96 333.36 
+L 532.44 333.36 
+z" style="fill:none;"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 532.44 98.88 
+L 915.96 98.88 
+L 915.96 333.36 
+L 532.44 333.36 
+z" style="fill:none;stroke:#d9d9d9;stroke-linecap:square;stroke-linejoin:miter;stroke-width:1;"/>
+   </g>
+   <g clip-path="url(#p9c6060c283)">
+    <g id="patch_17">
+     <path d="M 532.44 333.36 
+Q 700 300, 915.96 98.88
+L 915.96 333.36 
+L 532.44 333.36 
+z" style="fill:#b22222;fill-opacity:0.3;"/>
+    </g>
+    <g id="line2d_4">
+     <path d="M 532.44 333.36 
+Q 700 300, 915.96 98.88" style="fill:none;stroke:#b22222;stroke-width:1.5;"/>
+    </g>
+   </g>
+   <g id="matplotlib.axis_7"/>
+   <g id="matplotlib.axis_8"/>
+   <g id="patch_18">
+    <path d="M 532.44 345.36 
+L 915.96 345.36 
+L 915.96 86.88 
+L 532.44 86.88 
+z" style="fill:none;"/>
+   </g>
+   <g id="text_4">
+    <text style="fill:#000000;font-family:DejaVu Sans;font-size:12pt;stroke:none;" x="609.915" y="366.403125">4. Posição (Integral)</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p0e503310f8">
+   <rect height="258.48" width="383.52" x="92.04" y="390.24"/>
+  </clipPath>
+  <clipPath id="p5e3e29f34f">
+   <rect height="258.48" width="383.52" x="532.44" y="390.24"/>
+  </clipPath>
+  <clipPath id="p97e37517ea">
+   <rect height="258.48" width="383.52" x="92.04" y="86.88"/>
+  </clipPath>
+  <clipPath id="p9c6060c283">
+   <rect height="258.48" width="383.52" x="532.44" y="86.88"/>
+  </clipPath>
+ </defs>
+</svg>
